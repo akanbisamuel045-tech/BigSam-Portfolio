@@ -9,6 +9,8 @@ import { ServicesSection } from "@/components/home/ServicesSection";
 import { ProjectsGrid } from "@/components/home/ProjectsGrid";
 import { ProcessSection } from "@/components/home/ProcessSection";
 import { WhyChooseMeBento } from "@/components/home/WhyChooseMeBento";
+import { TestimonialsSection } from "@/components/home/TestimonialsSection";
+import { PricingSection } from "@/components/home/PricingSection";
 import { ArrowButton } from "@/components/ui/ArrowButton";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { portfolioData } from "@/data/portfolioData";
@@ -16,41 +18,41 @@ import { portfolioData } from "@/data/portfolioData";
 export default function HomePage() {
   const { personalInfo } = portfolioData;
 
-  const stage9Gates = [
+  const stage10Gates = [
     {
-      title: "Dark 4-Card Process Grid",
+      title: "Alternating Testimonials Grid",
       status: "PASS",
-      detail: "01 Architecture, 02 Prototyping, 03 Development, 04 Deployment in matte black",
+      detail: "4 client reviews with alternating top/bottom avatar layouts and 5 orange stars",
     },
     {
-      title: "Custom Burnt Orange Icons",
+      title: "Right Section Header Summary",
       status: "PASS",
-      detail: "#E84511 4-point sparkle, 8-spoke asterisk, lightning bolt, and plus geometric SVGs",
+      detail: "Engineering thoughtful full-stack systems uppercase statement on right slot",
     },
     {
-      title: "Interactive Hover Depth & Scale",
+      title: "Interactive Pricing Mode Toggle",
       status: "PASS",
-      detail: "Card border glows #E84511/50, icon scales and rotates 45deg with smooth transition",
+      detail: "Segmented switch between MONTHLY ($800) and PROJECT BASED ($500)",
     },
     {
-      title: "3-Column Bento Grid Layout",
+      title: "Dark 2-Card Pricing Geometry",
       status: "PASS",
-      detail: "Col 1 Stats (4+, 98%), Col 2 Amber Trust Stack, Col 3 Studio Portrait & Speed Card",
+      detail: "Left 4-col metadata card & Right 8-col price and features card in matte black",
     },
     {
-      title: "Animated Count-Up Metrics",
+      title: "Dynamic Feature List & Arrows",
       status: "PASS",
-      detail: "4+ Years Experience and 98% Client Satisfaction in giant display typography",
+      detail: "6 features per tier with #E84511 diagonal ↗ bullet markers and smooth crossfade",
     },
     {
-      title: "4.9/5 Star Floating Glass Card",
+      title: "Satisfaction Guarantee Block",
       status: "PASS",
-      detail: "4-avatar trust stack + floating glass testimonial card with 5 stars and reviewer info",
+      detail: "Orange lightning bolt icon with commitment statement to production excellence",
     },
     {
-      title: "Full-Width Workspace Banner",
+      title: "Expanding GET STARTED CTA",
       status: "PASS",
-      detail: "High-resolution panoramic developer dual-monitor environment with badge",
+      detail: "Full-width white bar with orange fill slide on hover linking to BigSam WhatsApp",
     },
     {
       title: "Responsive Viewports Verified",
@@ -97,24 +99,34 @@ export default function HomePage() {
       <WhyChooseMeBento />
 
       {/* ============================================================== */}
-      {/* 8. DIAGNOSTIC, GATES & STAGE 9 VERIFICATION SUITE */}
+      {/* 8. ALTERNATING TESTIMONIALS (STAGE 10 IMPLEMENTATION) */}
+      {/* ============================================================== */}
+      <TestimonialsSection />
+
+      {/* ============================================================== */}
+      {/* 9. INTERACTIVE DUAL-TIER PRICING (STAGE 10 IMPLEMENTATION) */}
+      {/* ============================================================== */}
+      <PricingSection />
+
+      {/* ============================================================== */}
+      {/* 10. DIAGNOSTIC, GATES & STAGE 10 VERIFICATION SUITE */}
       {/* ============================================================== */}
       <div className="p-6 md:p-12 lg:p-16 space-y-16 max-w-7xl mx-auto w-full">
-        {/* Stage 9 Status Banner */}
+        {/* Stage 10 Status Banner */}
         <div className="border-b border-[#E2E2E2] pb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <span className="text-[11px] font-mono uppercase tracking-widest text-[#E84511] font-bold">
-              STAGE 9 / 15
+              STAGE 10 / 15
             </span>
             <h2 className="font-display font-extrabold text-2xl tracking-tight text-[#111111]">
-              PROCESS GRID &amp; WHY CHOOSE ME BENTO
+              ALTERNATING TESTIMONIALS &amp; INTERACTIVE PRICING
             </h2>
           </div>
 
           <div className="flex items-center gap-3">
             <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
             <span className="text-xs uppercase font-mono tracking-widest font-semibold px-3 py-1.5 bg-white border border-[#E2E2E2] rounded-full text-[#111111] shadow-sm">
-              Stage 9 Verified &amp; Active
+              Stage 10 Verified &amp; Active
             </span>
           </div>
         </div>
@@ -231,13 +243,13 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Stage 9 Verification Gates */}
+        {/* Stage 10 Verification Gates */}
         <section className="space-y-4">
           <h3 className="font-display font-bold text-sm uppercase tracking-widest text-[#111111]">
-            Stage 9 Architectural Verification Gates
+            Stage 10 Architectural Verification Gates
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            {stage9Gates.map((gate) => (
+            {stage10Gates.map((gate) => (
               <div
                 key={gate.title}
                 className="bg-white border border-[#E2E2E2] p-4 rounded-xl flex flex-col justify-between space-y-2 shadow-sm"
@@ -259,7 +271,7 @@ export default function HomePage() {
       <footer className="border-t border-[#E2E2E2] py-6 px-6 md:px-12 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-[#8E8E8E] bg-white mt-auto">
         <div className="flex items-center gap-2">
           <span className="w-2 h-2 rounded-full bg-emerald-500" />
-          <span>Stage 9 of 15 Complete • Process Grid &amp; Why Choose Me Bento Verified</span>
+          <span>Stage 10 of 15 Complete • Alternating Testimonials &amp; Interactive Pricing Verified</span>
         </div>
         <div className="text-[#111111] font-semibold">
           {personalInfo.brandName} / {personalInfo.firstName} © {personalInfo.copyrightYear}
