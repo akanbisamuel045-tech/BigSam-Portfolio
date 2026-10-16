@@ -18,9 +18,9 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Samuel (Gadex®) — Full-Stack Engineer",
+  title: "BigSam (Gadex®) — Full-Stack Engineer",
   description:
-    "Samuel (Gadex®) — Full-Stack Engineer architecting scalable full-stack systems, modern APIs, and high-performance digital products.",
+    "BigSam (Gadex®) — Full-Stack Engineer architecting scalable full-stack systems, modern APIs, and high-performance digital products.",
 };
 
 export default function RootLayout({

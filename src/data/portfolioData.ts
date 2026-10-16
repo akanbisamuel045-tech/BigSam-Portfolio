@@ -147,18 +147,18 @@ export interface PortfolioData {
 
 export const portfolioData: PortfolioData = {
   personalInfo: {
-    firstName: "SAMUEL",
-    displayName: "Samuel",
+    firstName: "BIGSAM",
+    displayName: "BigSam",
     brandName: "Gadex®",
-    footerWordmark: "Samuel®",
+    footerWordmark: "BigSam®",
     role: "Full-Stack Engineer",
     copyrightYear: "2026",
     heroTagline:
       "I ARCHITECT SCALABLE FULL-STACK SYSTEMS THAT ARE FAST, RESILIENT AND IMPACTFUL",
     shortBio:
-      "HI, I'M SAMUEL, A FULL-STACK ENGINEER PASSIONATE ABOUT BUILDING HIGH-PERFORMANCE WEB APPLICATIONS, SCALABLE APIS, AND INTUITIVE USER INTERFACES.",
+      "HI, I'M BIGSAM, A FULL-STACK ENGINEER PASSIONATE ABOUT BUILDING HIGH-PERFORMANCE WEB APPLICATIONS, SCALABLE APIS, AND INTUITIVE USER INTERFACES.",
     philosophyHeadline: {
-      black: "SAMUEL BELIEVES CODE CREATES",
+      black: "BIGSAM BELIEVES CODE CREATES",
       gray: "MEANINGFUL DIGITAL PRODUCTS.",
     },
     philosophySubtext:
@@ -169,7 +169,7 @@ export const portfolioData: PortfolioData = {
     location: "Remote — Worldwide",
     officeHours: "Monday – Friday, 08AM – 08PM",
     bookingUrl:
-      "https://wa.me/2349160575724?text=Hello%20Samuel%20(Gadex),%20I%20would%20like%20to%20discuss%20a%20project%20with%20you",
+      "https://wa.me/2349160575724?text=Hello%20BigSam%20(Gadex),%20I%20would%20like%20to%20discuss%20a%20project%20with%20you",
     heroPortrait: "/assets/hero-portrait.png",
     avatarImage: "/assets/samuel-avatar.png",
     impactPortrait: "/assets/samuel-impact.png",
@@ -405,7 +405,7 @@ export const portfolioData: PortfolioData = {
         "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80",
       rating: 5,
       quote:
-        "Samuel engineered our web platform from scratch with incredible speed and clean code. Our load times dropped by 60% immediately.",
+        "BigSam engineered our web platform from scratch with incredible speed and clean code. Our load times dropped by 60% immediately.",
     },
     {
       id: "t2",
@@ -415,7 +415,7 @@ export const portfolioData: PortfolioData = {
         "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&auto=format&fit=crop&q=80",
       rating: 5,
       quote:
-        "Working with Samuel was seamless. He translated our product vision into a scalable full-stack application ahead of schedule.",
+        "Working with BigSam was seamless. He translated our product vision into a scalable full-stack application ahead of schedule.",
     },
     {
       id: "t3",
@@ -435,7 +435,7 @@ export const portfolioData: PortfolioData = {
         "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&auto=format&fit=crop&q=80",
       rating: 5,
       quote:
-        "Samuel built a custom dashboard and backend workflow that automated hours of manual work for our team. True professional.",
+        "BigSam built a custom dashboard and backend workflow that automated hours of manual work for our team. True professional.",
     },
   ],
 
@@ -521,7 +521,7 @@ export const portfolioData: PortfolioData = {
       excerpt:
         "Why clean boundaries between server actions, APIs, and client state make or break modern web apps.",
       category: "Architecture",
-      author: "Samuel",
+      author: "BigSam",
       date: "Oct 10, 2026",
       image:
         "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&auto=format&fit=crop&q=80",
@@ -532,7 +532,7 @@ export const portfolioData: PortfolioData = {
       excerpt:
         "Practical techniques for cutting query latency in PostgreSQL and MongoDB.",
       category: "Backend",
-      author: "Samuel",
+      author: "BigSam",
       date: "Sep 22, 2026",
       image:
         "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&auto=format&fit=crop&q=80",
@@ -543,7 +543,7 @@ export const portfolioData: PortfolioData = {
       excerpt:
         "Blending Framer Motion with Tailwind CSS for tactile, zero-lag interfaces.",
       category: "Frontend",
-      author: "Samuel",
+      author: "BigSam",
       date: "Aug 15, 2026",
       image:
         "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?w=800&auto=format&fit=crop&q=80",
@@ -554,7 +554,7 @@ export const portfolioData: PortfolioData = {
       excerpt:
         "Eliminating runtime bugs between backend services and frontend clients using TypeScript.",
       category: "TypeScript",
-      author: "Samuel",
+      author: "BigSam",
       date: "Jul 19, 2026",
       image:
         "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800&auto=format&fit=crop&q=80",
@@ -565,7 +565,7 @@ export const portfolioData: PortfolioData = {
       excerpt:
         "Moving from writing isolated code to engineering resilient end-to-end digital products.",
       category: "Process",
-      author: "Samuel",
+      author: "BigSam",
       date: "Jun 13, 2026",
       image:
         "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&auto=format&fit=crop&q=80",
@@ -576,7 +576,7 @@ export const portfolioData: PortfolioData = {
       excerpt:
         "Essential authentication, rate-limiting, and validation patterns every full-stack project needs.",
       category: "Security",
-      author: "Samuel",
+      author: "BigSam",
       date: "May 28, 2026",
       image:
         "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=800&auto=format&fit=crop&q=80",

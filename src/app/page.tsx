@@ -101,7 +101,7 @@ export default function HomePage() {
           blackText="EDITORIAL TRANSITION"
           grayText="& STATISTICAL PROOF."
           align="split"
-          subtext="BrandMarquee introduces social proof from leading brands, transitioning smoothly into the 12-column asymmetric ImpactSection showcasing Samuel's editorial portrait, spinning geometric asterisk, and core career metrics."
+          subtext="BrandMarquee introduces social proof from leading brands, transitioning smoothly into the 12-column asymmetric ImpactSection showcasing BigSam's editorial portrait, spinning geometric asterisk, and core career metrics."
           rightContent={
             <ArrowButton
               text="DISCUSS PROJECT"
@@ -112,7 +112,7 @@ export default function HomePage() {
           }
         />
 
-        {/* Real User Assets Showcase: Samuel Facecard & Original Gadex Logo */}
+        {/* Real User Assets Showcase: BigSam Facecard & Original Gadex Logo */}
         <section className="space-y-6">
           <div className="border-b border-[#E2E2E2] pb-3 flex items-center justify-between">
             <div>
@@ -120,7 +120,7 @@ export default function HomePage() {
                 Real User Assets (Loaded from raw-assets/ &amp; processed to public/assets/)
               </h3>
               <p className="text-xs text-[#8E8E8E]">
-                Original Gadex® logo &amp; Samuel&#39;s studio facecard cut out with edge-aware transparency
+                Original Gadex® logo &amp; BigSam&#39;s studio facecard cut out with edge-aware transparency
               </p>
             </div>
             <span className="text-xs font-mono bg-emerald-50 text-emerald-800 border border-emerald-200 px-3 py-1 rounded-full font-bold">
@@ -167,15 +167,15 @@ export default function HomePage() {
               </span>
             </div>
 
-            {/* 3. Samuel Facecard / Avatar */}
+            {/* 3. BigSam Facecard / Avatar */}
             <div className="bg-white border border-[#E2E2E2] p-6 rounded-2xl shadow-sm flex flex-col justify-between space-y-4">
               <span className="text-[11px] font-mono uppercase tracking-wider text-[#8E8E8E] font-semibold">
-                Samuel Facecard (Natural)
+                BigSam Facecard (Natural)
               </span>
               <div className="h-40 bg-[#F6F6F6] rounded-xl border border-[#E2E2E2] flex items-center justify-center overflow-hidden">
                 <Image
                   src="/assets/samuel-avatar.png"
-                  alt="Samuel Facecard"
+                  alt="BigSam Facecard"
                   width={140}
                   height={140}
                   className="w-32 h-32 rounded-full object-cover shadow-md border-2 border-[#E84511]"
@@ -186,15 +186,15 @@ export default function HomePage() {
               </span>
             </div>
 
-            {/* 4. Samuel Hero Cutout Portrait */}
+            {/* 4. BigSam Hero Cutout Portrait */}
             <div className="bg-white border border-[#E2E2E2] p-6 rounded-2xl shadow-sm flex flex-col justify-between space-y-4">
               <span className="text-[11px] font-mono uppercase tracking-wider text-[#8E8E8E] font-semibold">
-                Samuel Hero Cutout Portrait
+                BigSam Hero Cutout Portrait
               </span>
               <div className="h-40 bg-gradient-to-b from-[#E84511]/15 to-[#F6F6F6] rounded-xl border border-[#E2E2E2] flex items-center justify-center overflow-hidden">
                 <Image
                   src="/assets/hero-portrait.png"
-                  alt="Samuel Hero Cutout"
+                  alt="BigSam Hero Cutout"
                   width={140}
                   height={160}
                   className="max-h-full w-auto object-contain"

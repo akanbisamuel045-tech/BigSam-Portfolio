@@ -171,7 +171,7 @@ export const HeroSection: React.FC = () => {
               href={personalInfo.bookingUrl}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="Book Direct WhatsApp Consultation with Samuel"
+              aria-label="Book Direct WhatsApp Consultation with BigSam"
               className="group bg-[#111111] hover:bg-[#181818] text-white p-2.5 pr-3.5 flex items-center justify-between gap-4 w-full sm:w-[320px] md:w-[340px] shadow-[0_20px_45px_rgba(0,0,0,0.4)] border border-white/10 transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
             >
               {/* Left Avatar Thumbnail */}

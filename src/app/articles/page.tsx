@@ -16,7 +16,7 @@ export default function ArticlesPage() {
 
         <div className="pt-4 flex items-center gap-4">
           <ArrowButton text="BACK TO HOME" href="/" variant="light" />
-          <ArrowButton text="CONTACT SAMUEL" href="/contact" variant="dark" />
+          <ArrowButton text="CONTACT BIGSAM" href="/contact" variant="dark" />
         </div>
       </div>
     </main>

@@ -178,7 +178,7 @@ export const FullScreenMenu: React.FC<FullScreenMenuProps> = ({
           {/* Bottom Footer Row */}
           <div className="border-t border-white/10 py-4 px-6 md:px-12 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs font-mono text-[#8E8E8E] shrink-0">
             <div>Gadex® Architectural Suite • Full-Stack Engineer</div>
-            <div className="text-white">Samuel (Gadex®) © {personalInfo.copyrightYear}</div>
+            <div className="text-white">BigSam (Gadex®) © {personalInfo.copyrightYear}</div>
           </div>
         </motion.div>
       )}
