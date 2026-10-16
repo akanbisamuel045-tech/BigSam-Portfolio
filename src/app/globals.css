@@ -1,0 +1,36 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --brand-orange: #E84511;
+  --brand-orange-dark: #D9380A;
+  --bg-light: #F6F6F6;
+  --bg-dark: #111111;
+  --bg-card-dark: #1A1A1A;
+  --bg-drawer: #140B08;
+  --text-muted: #8E8E8E;
+  --border-light: #E2E2E2;
+  --border-dark: #262626;
+  --border-orange-grid: rgba(255, 255, 255, 0.16);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--bg-light);
+  color: var(--bg-dark);
+}
+
+/* Custom scrollbar for sleek editorial aesthetic */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #111111;
+}
+::-webkit-scrollbar-thumb {
+  background: #E84511;
+}
