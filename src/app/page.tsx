@@ -11,6 +11,7 @@ import { ProcessSection } from "@/components/home/ProcessSection";
 import { WhyChooseMeBento } from "@/components/home/WhyChooseMeBento";
 import { TestimonialsSection } from "@/components/home/TestimonialsSection";
 import { PricingSection } from "@/components/home/PricingSection";
+import { CtaBanner } from "@/components/layout/CtaBanner";
 import { ArrowButton } from "@/components/ui/ArrowButton";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { portfolioData } from "@/data/portfolioData";
@@ -18,46 +19,46 @@ import { portfolioData } from "@/data/portfolioData";
 export default function HomePage() {
   const { personalInfo } = portfolioData;
 
-  const stage10Gates = [
+  const stage11Gates = [
     {
-      title: "Alternating Testimonials Grid",
+      title: "Pre-Footer Dark CTA Banner",
       status: "PASS",
-      detail: "4 client reviews with alternating top/bottom avatar layouts and 5 orange stars",
+      detail: "Matte black rounded container with glowing orange ambient gradient orbs and 12-col grid",
     },
     {
-      title: "Right Section Header Summary",
+      title: "4 Architectural Corner Crosshairs",
       status: "PASS",
-      detail: "Engineering thoughtful full-stack systems uppercase statement on right slot",
+      detail: "GridCrosshair components anchored at top-left, top-right, bottom-left, bottom-right",
     },
     {
-      title: "Interactive Pricing Mode Toggle",
+      title: "Editorial Headline & Subtext",
       status: "PASS",
-      detail: "Segmented switch between MONTHLY ($800) and PROJECT BASED ($500)",
+      detail: "'HAVE AN IDEA IN MIND? LET'S BUILD IT TOGETHER' with dual white/gray styling",
     },
     {
-      title: "Dark 2-Card Pricing Geometry",
+      title: "Interactive Quick Consultation Form",
       status: "PASS",
-      detail: "Left 4-col metadata card & Right 8-col price and features card in matte black",
+      detail: "Email input and expanding action button routing directly to WhatsApp consultation",
     },
     {
-      title: "Dynamic Feature List & Arrows",
+      title: "4-Column Editorial Directory",
       status: "PASS",
-      detail: "6 features per tier with #E84511 diagonal ↗ bullet markers and smooth crossfade",
+      detail: "Gadex® brand & social icons, uppercase nav links, direct contact, and status card",
     },
     {
-      title: "Satisfaction Guarantee Block",
+      title: "Giant BIGSAM Architectural Wordmark",
       status: "PASS",
-      detail: "Orange lightning bolt icon with commitment statement to production excellence",
+      detail: "Responsive 18vw-22vw geometric display watermark with subtle opacity and hover glow",
     },
     {
-      title: "Expanding GET STARTED CTA",
+      title: "Global Sticky Layout Mount",
       status: "PASS",
-      detail: "Full-width white bar with orange fill slide on hover linking to BigSam WhatsApp",
+      detail: "Footer component cleanly mounted in root layout.tsx for universal page inheritance",
     },
     {
-      title: "Responsive Viewports Verified",
+      title: "Smooth Back to Top Scroll Control",
       status: "PASS",
-      detail: "Mobile (375px), Tablet (768px), and Desktop (1440px) verified cleanly",
+      detail: "Animated back to top button with smooth window scrollTo behavior and arrow icon",
     },
   ];
 
@@ -109,24 +110,29 @@ export default function HomePage() {
       <PricingSection />
 
       {/* ============================================================== */}
-      {/* 10. DIAGNOSTIC, GATES & STAGE 10 VERIFICATION SUITE */}
+      {/* 10. PRE-FOOTER CTA BANNER (STAGE 11 IMPLEMENTATION) */}
+      {/* ============================================================== */}
+      <CtaBanner />
+
+      {/* ============================================================== */}
+      {/* 11. DIAGNOSTIC, GATES & STAGE 11 VERIFICATION SUITE */}
       {/* ============================================================== */}
       <div className="p-6 md:p-12 lg:p-16 space-y-16 max-w-7xl mx-auto w-full">
-        {/* Stage 10 Status Banner */}
+        {/* Stage 11 Status Banner */}
         <div className="border-b border-[#E2E2E2] pb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <span className="text-[11px] font-mono uppercase tracking-widest text-[#E84511] font-bold">
-              STAGE 10 / 15
+              STAGE 11 / 15
             </span>
             <h2 className="font-display font-extrabold text-2xl tracking-tight text-[#111111]">
-              ALTERNATING TESTIMONIALS &amp; INTERACTIVE PRICING
+              PRE-FOOTER CTA BANNER &amp; EDITORIAL 4-COLUMN FOOTER
             </h2>
           </div>
 
           <div className="flex items-center gap-3">
             <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
             <span className="text-xs uppercase font-mono tracking-widest font-semibold px-3 py-1.5 bg-white border border-[#E2E2E2] rounded-full text-[#111111] shadow-sm">
-              Stage 10 Verified &amp; Active
+              Stage 11 Verified &amp; Active
             </span>
           </div>
         </div>
@@ -243,13 +249,13 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Stage 10 Verification Gates */}
+        {/* Stage 11 Verification Gates */}
         <section className="space-y-4">
           <h3 className="font-display font-bold text-sm uppercase tracking-widest text-[#111111]">
-            Stage 10 Architectural Verification Gates
+            Stage 11 Architectural Verification Gates
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            {stage10Gates.map((gate) => (
+            {stage11Gates.map((gate) => (
               <div
                 key={gate.title}
                 className="bg-white border border-[#E2E2E2] p-4 rounded-xl flex flex-col justify-between space-y-2 shadow-sm"
@@ -267,16 +273,16 @@ export default function HomePage() {
         </section>
       </div>
 
-      {/* Footer Status Bar */}
-      <footer className="border-t border-[#E2E2E2] py-6 px-6 md:px-12 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-[#8E8E8E] bg-white mt-auto">
+      {/* Stage Diagnostic Status Bar */}
+      <div className="border-t border-[#E2E2E2] py-4 px-6 md:px-12 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-[#8E8E8E] bg-white">
         <div className="flex items-center gap-2">
           <span className="w-2 h-2 rounded-full bg-emerald-500" />
-          <span>Stage 10 of 15 Complete • Alternating Testimonials &amp; Interactive Pricing Verified</span>
+          <span>Stage 11 of 15 Complete • Pre-Footer CTA Banner &amp; Editorial 4-Column Footer Verified</span>
         </div>
         <div className="text-[#111111] font-semibold">
           {personalInfo.brandName} / {personalInfo.firstName} © {personalInfo.copyrightYear}
         </div>
-      </footer>
+      </div>
     </div>
   );
 }
