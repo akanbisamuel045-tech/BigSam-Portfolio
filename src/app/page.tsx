@@ -7,6 +7,8 @@ import { BrandMarquee } from "@/components/home/BrandMarquee";
 import { ImpactSection } from "@/components/home/ImpactSection";
 import { ServicesSection } from "@/components/home/ServicesSection";
 import { ProjectsGrid } from "@/components/home/ProjectsGrid";
+import { ProcessSection } from "@/components/home/ProcessSection";
+import { WhyChooseMeBento } from "@/components/home/WhyChooseMeBento";
 import { ArrowButton } from "@/components/ui/ArrowButton";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { portfolioData } from "@/data/portfolioData";
@@ -14,46 +16,46 @@ import { portfolioData } from "@/data/portfolioData";
 export default function HomePage() {
   const { personalInfo } = portfolioData;
 
-  const stage8Gates = [
+  const stage9Gates = [
     {
-      title: "3-Row Staggered Editorial Grid",
+      title: "Dark 4-Card Process Grid",
       status: "PASS",
-      detail: "Rows 1, 2, and 3 match exact reference video layout at 00:14–00:19",
+      detail: "01 Architecture, 02 Prototyping, 03 Development, 04 Deployment in matte black",
     },
     {
-      title: "Row 1: 5-Col & 4-Col Offset",
+      title: "Custom Burnt Orange Icons",
       status: "PASS",
-      detail: "GADEX NEXUS (col 1-5) and PULSE FINTECH (col 9-12 offset)",
+      detail: "#E84511 4-point sparkle, 8-spoke asterisk, lightning bolt, and plus geometric SVGs",
     },
     {
-      title: "Row 2: Full-Width 12-Col Banner",
+      title: "Interactive Hover Depth & Scale",
       status: "PASS",
-      detail: "ARKEO CLOUD ENGINE full-width 21/9 panoramic card",
+      detail: "Card border glows #E84511/50, icon scales and rotates 45deg with smooth transition",
     },
     {
-      title: "Row 3: Square & 6-Col Offset",
+      title: "3-Column Bento Grid Layout",
       status: "PASS",
-      detail: "NOVU ANALYTICS (col 1-4) and ZENTIX API HUB (col 7-12 offset)",
+      detail: "Col 1 Stats (4+, 98%), Col 2 Amber Trust Stack, Col 3 Studio Portrait & Speed Card",
     },
     {
-      title: "White Editorial Picture Frames",
+      title: "Animated Count-Up Metrics",
       status: "PASS",
-      detail: "Crisp white frames with soft shadows, padding, and bottom caption bars",
+      detail: "4+ Years Experience and 98% Client Satisfaction in giant display typography",
     },
     {
-      title: "Interactive Hover Badge Cursor",
+      title: "4.9/5 Star Floating Glass Card",
       status: "PASS",
-      detail: "Orange circular ↗ badge scales and fades in on image hover matching 00:18",
+      detail: "4-avatar trust stack + floating glass testimonial card with 5 stars and reviewer info",
     },
     {
-      title: "Sparkle & Title Hover Accents",
+      title: "Full-Width Workspace Banner",
       status: "PASS",
-      detail: "✦ rotates 90deg and project title highlights in #E84511 on hover",
+      detail: "High-resolution panoramic developer dual-monitor environment with badge",
     },
     {
-      title: "Bottom-Left ALL PROJECTS CTA",
+      title: "Responsive Viewports Verified",
       status: "PASS",
-      detail: "Sliding orange ArrowButton linking directly to BigSam GitHub repository",
+      detail: "Mobile (375px), Tablet (768px), and Desktop (1440px) verified cleanly",
     },
   ];
 
@@ -85,24 +87,34 @@ export default function HomePage() {
       <ProjectsGrid />
 
       {/* ============================================================== */}
-      {/* 6. DIAGNOSTIC, GATES & STAGE 8 VERIFICATION SUITE */}
+      {/* 6. ENGINEERING PROCESS (STAGE 9 IMPLEMENTATION) */}
+      {/* ============================================================== */}
+      <ProcessSection />
+
+      {/* ============================================================== */}
+      {/* 7. WHY CHOOSE ME BENTO & WORKSPACE (STAGE 9 IMPLEMENTATION) */}
+      {/* ============================================================== */}
+      <WhyChooseMeBento />
+
+      {/* ============================================================== */}
+      {/* 8. DIAGNOSTIC, GATES & STAGE 9 VERIFICATION SUITE */}
       {/* ============================================================== */}
       <div className="p-6 md:p-12 lg:p-16 space-y-16 max-w-7xl mx-auto w-full">
-        {/* Stage 8 Status Banner */}
+        {/* Stage 9 Status Banner */}
         <div className="border-b border-[#E2E2E2] pb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <span className="text-[11px] font-mono uppercase tracking-widest text-[#E84511] font-bold">
-              STAGE 8 / 15
+              STAGE 9 / 15
             </span>
             <h2 className="font-display font-extrabold text-2xl tracking-tight text-[#111111]">
-              EDITORIAL ASYMMETRIC PORTFOLIO GRID
+              PROCESS GRID &amp; WHY CHOOSE ME BENTO
             </h2>
           </div>
 
           <div className="flex items-center gap-3">
             <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
             <span className="text-xs uppercase font-mono tracking-widest font-semibold px-3 py-1.5 bg-white border border-[#E2E2E2] rounded-full text-[#111111] shadow-sm">
-              Stage 8 Verified &amp; Active
+              Stage 9 Verified &amp; Active
             </span>
           </div>
         </div>
@@ -219,13 +231,13 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Stage 8 Verification Gates */}
+        {/* Stage 9 Verification Gates */}
         <section className="space-y-4">
           <h3 className="font-display font-bold text-sm uppercase tracking-widest text-[#111111]">
-            Stage 8 Architectural Verification Gates
+            Stage 9 Architectural Verification Gates
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            {stage8Gates.map((gate) => (
+            {stage9Gates.map((gate) => (
               <div
                 key={gate.title}
                 className="bg-white border border-[#E2E2E2] p-4 rounded-xl flex flex-col justify-between space-y-2 shadow-sm"
@@ -247,7 +259,7 @@ export default function HomePage() {
       <footer className="border-t border-[#E2E2E2] py-6 px-6 md:px-12 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-[#8E8E8E] bg-white mt-auto">
         <div className="flex items-center gap-2">
           <span className="w-2 h-2 rounded-full bg-emerald-500" />
-          <span>Stage 8 of 15 Complete • Editorial Asymmetric Portfolio Grid Verified</span>
+          <span>Stage 9 of 15 Complete • Process Grid &amp; Why Choose Me Bento Verified</span>
         </div>
         <div className="text-[#111111] font-semibold">
           {personalInfo.brandName} / {personalInfo.firstName} © {personalInfo.copyrightYear}
