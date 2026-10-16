@@ -5,6 +5,7 @@ import Image from "next/image";
 import { HeroSection } from "@/components/home/HeroSection";
 import { BrandMarquee } from "@/components/home/BrandMarquee";
 import { ImpactSection } from "@/components/home/ImpactSection";
+import { ServicesSection } from "@/components/home/ServicesSection";
 import { ArrowButton } from "@/components/ui/ArrowButton";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { portfolioData } from "@/data/portfolioData";
@@ -12,41 +13,41 @@ import { portfolioData } from "@/data/portfolioData";
 export default function HomePage() {
   const { personalInfo } = portfolioData;
 
-  const stage6Gates = [
+  const stage7Gates = [
     {
-      title: "BrandMarquee Header & Grid",
+      title: "001-004 Service Rows",
       status: "PASS",
-      detail: "TRUSTED BY LEADING BRANDS label + 5 client logos in clean muted typography",
+      detail: "Full-Stack Dev, API Systems, Frontend Engineering, AI & SaaS Integration rendered",
     },
     {
-      title: "ImpactSection 12-Column Grid",
+      title: "Default 001 Orange Highlight",
       status: "PASS",
-      detail: "Asymmetric 4:3:5 editorial column distribution matching reference video",
+      detail: "Row 001 title begins in #E84511 burnt orange, matching video reference at 00:11",
     },
     {
-      title: "Framed Impact Portrait",
+      title: "Interactive Hover State Transition",
       status: "PASS",
-      detail: "Aspect 4:5 image container with 4 corner GridCrosshair markers",
+      detail: "Hovering rows dynamically transfers active title color and scales preview card",
     },
     {
-      title: "Rotating Geometric Asterisk",
+      title: "Rotating 8-Point Asterisk Icon",
       status: "PASS",
-      detail: "8-spoke SVG with orange center dot spinning smoothly via CSS animation",
+      detail: "#E84511 geometric sparkle SVG rotates 90deg on row hover alongside index badge",
     },
     {
-      title: "Dynamic Bio Paragraph",
+      title: "5 Skill Pill Tags per Service",
       status: "PASS",
-      detail: "Pulls personalInfo.shortBio in uppercase tracking-wide typography",
+      detail: "Clean pill tags with subtle hover border and background transitions",
     },
     {
-      title: "Bordered Stat Block 1",
+      title: "Floating Action Pill Button",
       status: "PASS",
-      detail: "5+ PROJECTS COMPLETED with hover-rotating ArrowUpRight icon",
+      detail: "Centered DISCUSS button with rotating ArrowUpRight icon linking to /contact",
     },
     {
-      title: "Bordered Stat Block 2",
+      title: "Framer Motion Scroll Reveal",
       status: "PASS",
-      detail: "10+ HAPPY CLIENTS with hover-rotating ArrowUpRight icon",
+      detail: "Smooth staggered vertical reveal with viewport margin detection",
     },
     {
       title: "Responsive Viewports Verified",
@@ -73,24 +74,29 @@ export default function HomePage() {
       <ImpactSection />
 
       {/* ============================================================== */}
-      {/* 4. DIAGNOSTIC, GATES & STAGE 6 VERIFICATION SUITE */}
+      {/* 4. SERVICES SECTION (STAGE 7 IMPLEMENTATION) */}
+      {/* ============================================================== */}
+      <ServicesSection />
+
+      {/* ============================================================== */}
+      {/* 5. DIAGNOSTIC, GATES & STAGE 7 VERIFICATION SUITE */}
       {/* ============================================================== */}
       <div className="p-6 md:p-12 lg:p-16 space-y-16 max-w-7xl mx-auto w-full">
-        {/* Stage 6 Status Banner */}
+        {/* Stage 7 Status Banner */}
         <div className="border-b border-[#E2E2E2] pb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <span className="text-[11px] font-mono uppercase tracking-widest text-[#E84511] font-bold">
-              STAGE 6 / 15
+              STAGE 7 / 15
             </span>
             <h2 className="font-display font-extrabold text-2xl tracking-tight text-[#111111]">
-              BRAND MARQUEE &amp; &quot;MY IMPACT&quot; ASYMMETRIC GRID
+              INTERACTIVE SERVICES ROWS (001 - 004)
             </h2>
           </div>
 
           <div className="flex items-center gap-3">
             <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
             <span className="text-xs uppercase font-mono tracking-widest font-semibold px-3 py-1.5 bg-white border border-[#E2E2E2] rounded-full text-[#111111] shadow-sm">
-              Stage 6 Verified &amp; Active
+              Stage 7 Verified &amp; Active
             </span>
           </div>
         </div>
@@ -207,13 +213,13 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Stage 6 Verification Gates */}
+        {/* Stage 7 Verification Gates */}
         <section className="space-y-4">
           <h3 className="font-display font-bold text-sm uppercase tracking-widest text-[#111111]">
-            Stage 6 Architectural Verification Gates
+            Stage 7 Architectural Verification Gates
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            {stage6Gates.map((gate) => (
+            {stage7Gates.map((gate) => (
               <div
                 key={gate.title}
                 className="bg-white border border-[#E2E2E2] p-4 rounded-xl flex flex-col justify-between space-y-2 shadow-sm"
@@ -235,7 +241,7 @@ export default function HomePage() {
       <footer className="border-t border-[#E2E2E2] py-6 px-6 md:px-12 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-[#8E8E8E] bg-white mt-auto">
         <div className="flex items-center gap-2">
           <span className="w-2 h-2 rounded-full bg-emerald-500" />
-          <span>Stage 6 of 15 Complete • Brand Marquee &amp; Impact Section Verified</span>
+          <span>Stage 7 of 15 Complete • Interactive Services Rows Verified</span>
         </div>
         <div className="text-[#111111] font-semibold">
           {personalInfo.brandName} / {personalInfo.firstName} © {personalInfo.copyrightYear}
