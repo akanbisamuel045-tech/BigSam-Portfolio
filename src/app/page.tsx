@@ -6,6 +6,7 @@ import { HeroSection } from "@/components/home/HeroSection";
 import { BrandMarquee } from "@/components/home/BrandMarquee";
 import { ImpactSection } from "@/components/home/ImpactSection";
 import { ServicesSection } from "@/components/home/ServicesSection";
+import { ProjectsGrid } from "@/components/home/ProjectsGrid";
 import { ArrowButton } from "@/components/ui/ArrowButton";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { portfolioData } from "@/data/portfolioData";
@@ -13,46 +14,46 @@ import { portfolioData } from "@/data/portfolioData";
 export default function HomePage() {
   const { personalInfo } = portfolioData;
 
-  const stage7Gates = [
+  const stage8Gates = [
     {
-      title: "001-004 Service Rows",
+      title: "3-Row Staggered Editorial Grid",
       status: "PASS",
-      detail: "Full-Stack Dev, API Systems, Frontend Engineering, AI & SaaS Integration rendered",
+      detail: "Rows 1, 2, and 3 match exact reference video layout at 00:14–00:19",
     },
     {
-      title: "Default 001 Orange Highlight",
+      title: "Row 1: 5-Col & 4-Col Offset",
       status: "PASS",
-      detail: "Row 001 title begins in #E84511 burnt orange, matching video reference at 00:11",
+      detail: "GADEX NEXUS (col 1-5) and PULSE FINTECH (col 9-12 offset)",
     },
     {
-      title: "Interactive Hover State Transition",
+      title: "Row 2: Full-Width 12-Col Banner",
       status: "PASS",
-      detail: "Hovering rows dynamically transfers active title color and scales preview card",
+      detail: "ARKEO CLOUD ENGINE full-width 21/9 panoramic card",
     },
     {
-      title: "Rotating 8-Point Asterisk Icon",
+      title: "Row 3: Square & 6-Col Offset",
       status: "PASS",
-      detail: "#E84511 geometric sparkle SVG rotates 90deg on row hover alongside index badge",
+      detail: "NOVU ANALYTICS (col 1-4) and ZENTIX API HUB (col 7-12 offset)",
     },
     {
-      title: "5 Skill Pill Tags per Service",
+      title: "White Editorial Picture Frames",
       status: "PASS",
-      detail: "Clean pill tags with subtle hover border and background transitions",
+      detail: "Crisp white frames with soft shadows, padding, and bottom caption bars",
     },
     {
-      title: "Floating Action Pill Button",
+      title: "Interactive Hover Badge Cursor",
       status: "PASS",
-      detail: "Centered DISCUSS button with rotating ArrowUpRight icon linking to /contact",
+      detail: "Orange circular ↗ badge scales and fades in on image hover matching 00:18",
     },
     {
-      title: "Framer Motion Scroll Reveal",
+      title: "Sparkle & Title Hover Accents",
       status: "PASS",
-      detail: "Smooth staggered vertical reveal with viewport margin detection",
+      detail: "✦ rotates 90deg and project title highlights in #E84511 on hover",
     },
     {
-      title: "Responsive Viewports Verified",
+      title: "Bottom-Left ALL PROJECTS CTA",
       status: "PASS",
-      detail: "Mobile (375px), Tablet (768px), and Desktop (1440px) verified cleanly",
+      detail: "Sliding orange ArrowButton linking directly to BigSam GitHub repository",
     },
   ];
 
@@ -79,24 +80,29 @@ export default function HomePage() {
       <ServicesSection />
 
       {/* ============================================================== */}
-      {/* 5. DIAGNOSTIC, GATES & STAGE 7 VERIFICATION SUITE */}
+      {/* 5. PROJECTS GRID SECTION (STAGE 8 IMPLEMENTATION) */}
+      {/* ============================================================== */}
+      <ProjectsGrid />
+
+      {/* ============================================================== */}
+      {/* 6. DIAGNOSTIC, GATES & STAGE 8 VERIFICATION SUITE */}
       {/* ============================================================== */}
       <div className="p-6 md:p-12 lg:p-16 space-y-16 max-w-7xl mx-auto w-full">
-        {/* Stage 7 Status Banner */}
+        {/* Stage 8 Status Banner */}
         <div className="border-b border-[#E2E2E2] pb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <span className="text-[11px] font-mono uppercase tracking-widest text-[#E84511] font-bold">
-              STAGE 7 / 15
+              STAGE 8 / 15
             </span>
             <h2 className="font-display font-extrabold text-2xl tracking-tight text-[#111111]">
-              INTERACTIVE SERVICES ROWS (001 - 004)
+              EDITORIAL ASYMMETRIC PORTFOLIO GRID
             </h2>
           </div>
 
           <div className="flex items-center gap-3">
             <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
             <span className="text-xs uppercase font-mono tracking-widest font-semibold px-3 py-1.5 bg-white border border-[#E2E2E2] rounded-full text-[#111111] shadow-sm">
-              Stage 7 Verified &amp; Active
+              Stage 8 Verified &amp; Active
             </span>
           </div>
         </div>
@@ -213,13 +219,13 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Stage 7 Verification Gates */}
+        {/* Stage 8 Verification Gates */}
         <section className="space-y-4">
           <h3 className="font-display font-bold text-sm uppercase tracking-widest text-[#111111]">
-            Stage 7 Architectural Verification Gates
+            Stage 8 Architectural Verification Gates
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            {stage7Gates.map((gate) => (
+            {stage8Gates.map((gate) => (
               <div
                 key={gate.title}
                 className="bg-white border border-[#E2E2E2] p-4 rounded-xl flex flex-col justify-between space-y-2 shadow-sm"
@@ -241,7 +247,7 @@ export default function HomePage() {
       <footer className="border-t border-[#E2E2E2] py-6 px-6 md:px-12 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-[#8E8E8E] bg-white mt-auto">
         <div className="flex items-center gap-2">
           <span className="w-2 h-2 rounded-full bg-emerald-500" />
-          <span>Stage 7 of 15 Complete • Interactive Services Rows Verified</span>
+          <span>Stage 8 of 15 Complete • Editorial Asymmetric Portfolio Grid Verified</span>
         </div>
         <div className="text-[#111111] font-semibold">
           {personalInfo.brandName} / {personalInfo.firstName} © {personalInfo.copyrightYear}
