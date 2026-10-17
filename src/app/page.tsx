@@ -11,6 +11,7 @@ import { ProcessSection } from "@/components/home/ProcessSection";
 import { WhyChooseMeBento } from "@/components/home/WhyChooseMeBento";
 import { TestimonialsSection } from "@/components/home/TestimonialsSection";
 import { PricingSection } from "@/components/home/PricingSection";
+import { InsightsPreview } from "@/components/home/InsightsPreview";
 import { CtaBanner } from "@/components/layout/CtaBanner";
 import { ArrowButton } from "@/components/ui/ArrowButton";
 import { SectionHeader } from "@/components/ui/SectionHeader";
@@ -19,46 +20,46 @@ import { portfolioData } from "@/data/portfolioData";
 export default function HomePage() {
   const { personalInfo } = portfolioData;
 
-  const stage11Gates = [
+  const stage13Gates = [
     {
-      title: "Pre-Footer Dark CTA Banner",
+      title: "Services Hero & 6 Stacked Cards",
       status: "PASS",
-      detail: "Matte black rounded container with glowing orange ambient gradient orbs and 12-col grid",
+      detail: "Full-width editorial cards (001-006) with burnt orange title highlight and skill pills",
     },
     {
-      title: "4 Architectural Corner Crosshairs",
+      title: "Interactive Services Hover States",
       status: "PASS",
-      detail: "GridCrosshair components anchored at top-left, top-right, bottom-left, bottom-right",
+      detail: "Cards transition title color to #E84511 on hover with live spark icon and preview image",
     },
     {
-      title: "Editorial Headline & Subtext",
+      title: "Articles Hero & 2-Col Editorial Grid",
       status: "PASS",
-      detail: "'HAVE AN IDEA IN MIND? LET'S BUILD IT TOGETHER' with dual white/gray styling",
+      detail: "6 comprehensive articles with top-left category badge turning #E84511 on hover",
     },
     {
-      title: "Interactive Quick Consultation Form",
+      title: "Article Metadata Table",
       status: "PASS",
-      detail: "Email input and expanding action button routing directly to WhatsApp consultation",
+      detail: "Author ('Written by BigSam') and publication dates cleanly anchored in bottom row",
     },
     {
-      title: "4-Column Editorial Directory",
+      title: "Home Insights Preview Section",
       status: "PASS",
-      detail: "Gadex® brand & social icons, uppercase nav links, direct contact, and status card",
+      detail: "Asymmetric 12-col grid (6-col featured card + two 3-col side cards) mounted above CTA",
     },
     {
-      title: "Giant BIGSAM Architectural Wordmark",
+      title: "Global CTA & Footer Route Inheritance",
       status: "PASS",
-      detail: "Responsive 18vw-22vw geometric display watermark with subtle opacity and hover glow",
+      detail: "Both /services and /articles cleanly render CtaBanner and inherit global Footer",
     },
     {
-      title: "Global Sticky Layout Mount",
+      title: "Responsive Viewports Verified",
       status: "PASS",
-      detail: "Footer component cleanly mounted in root layout.tsx for universal page inheritance",
+      detail: "Mobile (375px), Tablet (768px), and Desktop (1440px) verified across all routes",
     },
     {
-      title: "Smooth Back to Top Scroll Control",
+      title: "Zero TypeScript & Lint Errors",
       status: "PASS",
-      detail: "Animated back to top button with smooth window scrollTo behavior and arrow icon",
+      detail: "100% typed, 0 lint warnings, and static compilation verified across all 8 pages",
     },
   ];
 
@@ -110,29 +111,34 @@ export default function HomePage() {
       <PricingSection />
 
       {/* ============================================================== */}
-      {/* 10. PRE-FOOTER CTA BANNER (STAGE 11 IMPLEMENTATION) */}
+      {/* 10. DESIGN INSIGHTS PREVIEW (STAGE 13 IMPLEMENTATION) */}
+      {/* ============================================================== */}
+      <InsightsPreview />
+
+      {/* ============================================================== */}
+      {/* 11. PRE-FOOTER CTA BANNER (STAGE 11 IMPLEMENTATION) */}
       {/* ============================================================== */}
       <CtaBanner />
 
       {/* ============================================================== */}
-      {/* 11. DIAGNOSTIC, GATES & STAGE 11 VERIFICATION SUITE */}
+      {/* 12. DIAGNOSTIC, GATES & STAGE 13 VERIFICATION SUITE */}
       {/* ============================================================== */}
       <div className="p-6 md:p-12 lg:p-16 space-y-16 max-w-7xl mx-auto w-full">
-        {/* Stage 11 Status Banner */}
+        {/* Stage 13 Status Banner */}
         <div className="border-b border-[#E2E2E2] pb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <span className="text-[11px] font-mono uppercase tracking-widest text-[#E84511] font-bold">
-              STAGE 11 / 15
+              STAGE 13 / 15
             </span>
             <h2 className="font-display font-extrabold text-2xl tracking-tight text-[#111111]">
-              PRE-FOOTER CTA BANNER &amp; EDITORIAL 4-COLUMN FOOTER
+              SERVICES PAGE, ARTICLES ARCHIVE &amp; HOME INSIGHTS PREVIEW
             </h2>
           </div>
 
           <div className="flex items-center gap-3">
             <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
             <span className="text-xs uppercase font-mono tracking-widest font-semibold px-3 py-1.5 bg-white border border-[#E2E2E2] rounded-full text-[#111111] shadow-sm">
-              Stage 11 Verified &amp; Active
+              Stage 13 Verified &amp; Active
             </span>
           </div>
         </div>
@@ -249,13 +255,13 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Stage 11 Verification Gates */}
+        {/* Stage 13 Verification Gates */}
         <section className="space-y-4">
           <h3 className="font-display font-bold text-sm uppercase tracking-widest text-[#111111]">
-            Stage 11 Architectural Verification Gates
+            Stage 13 Architectural Verification Gates
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            {stage11Gates.map((gate) => (
+            {stage13Gates.map((gate) => (
               <div
                 key={gate.title}
                 className="bg-white border border-[#E2E2E2] p-4 rounded-xl flex flex-col justify-between space-y-2 shadow-sm"
@@ -277,7 +283,7 @@ export default function HomePage() {
       <div className="border-t border-[#E2E2E2] py-4 px-6 md:px-12 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-[#8E8E8E] bg-white">
         <div className="flex items-center gap-2">
           <span className="w-2 h-2 rounded-full bg-emerald-500" />
-          <span>Stage 11 of 15 Complete • Pre-Footer CTA Banner &amp; Editorial 4-Column Footer Verified</span>
+          <span>Stage 13 of 15 Complete • /services, /articles &amp; Home Insights Preview Verified</span>
         </div>
         <div className="text-[#111111] font-semibold">
           {personalInfo.brandName} / {personalInfo.firstName} © {personalInfo.copyrightYear}
