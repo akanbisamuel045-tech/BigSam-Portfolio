@@ -11,6 +11,10 @@ export const Navbar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const pathname = usePathname();
 
+  if (pathname?.startsWith("/admin")) {
+    return null;
+  }
+
   const navLinks = [
     { label: "Home", href: "/" },
     { label: "About", href: "/about" },

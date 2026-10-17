@@ -1,8 +1,24 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getCMSData, saveCMSData, resetCMSData } from "@/lib/cmsStorage";
 import { PortfolioData } from "@/data/portfolioData";
+import { ADMIN_COOKIE_NAME, getAdminPassword, verifySessionToken } from "@/lib/auth";
 
 export const dynamic = "force-dynamic";
+
+/**
+ * Validates request authorization via x-admin-key header or session cookie.
+ */
+async function isAuthorized(request: NextRequest): Promise<boolean> {
+  const adminKey = request.headers.get("x-admin-key");
+  if (adminKey && adminKey.trim() === getAdminPassword().trim()) {
+    return true;
+  }
+  const sessionToken = request.cookies.get(ADMIN_COOKIE_NAME)?.value;
+  if (sessionToken && (await verifySessionToken(sessionToken))) {
+    return true;
+  }
+  return false;
+}
 
 /**
  * GET /api/admin/content
@@ -32,12 +48,16 @@ export async function GET() {
 /**
  * PUT /api/admin/content
  * Updates the full dataset or merges a specific section.
- * Body can be either:
- *  - Full PortfolioData payload
- *  - { section: keyof PortfolioData, value: any }
+ * Requires valid administrator session or x-admin-key.
  */
 export async function PUT(request: NextRequest) {
   try {
+    if (!(await isAuthorized(request))) {
+      return NextResponse.json(
+        { success: false, error: "Unauthorized: Administrator session or x-admin-key required." },
+        { status: 401 }
+      );
+    }
     const body = await request.json();
     const currentData = await getCMSData();
 
@@ -89,6 +109,12 @@ export async function PUT(request: NextRequest) {
  */
 export async function POST(request: NextRequest) {
   try {
+    if (!(await isAuthorized(request))) {
+      return NextResponse.json(
+        { success: false, error: "Unauthorized: Administrator session or x-admin-key required." },
+        { status: 401 }
+      );
+    }
     const body = await request.json();
 
     if (body?.action === "reset") {

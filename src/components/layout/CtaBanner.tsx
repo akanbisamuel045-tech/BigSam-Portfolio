@@ -1,16 +1,22 @@
 "use client";
 
 import React, { useState } from "react";
+import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { GridCrosshair } from "@/components/ui/GridCrosshair";
 import { usePortfolioData } from "@/context/PortfolioContext";
 
 export const CtaBanner: React.FC = () => {
+  const pathname = usePathname();
   const { data: portfolioData } = usePortfolioData();
   const { personalInfo } = portfolioData;
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
+
+  if (pathname?.startsWith("/admin")) {
+    return null;
+  }
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

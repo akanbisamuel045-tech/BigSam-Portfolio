@@ -2,13 +2,19 @@
 
 import React from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { ArrowUpRight, ArrowUp, Github, Linkedin, MessageCircle, Mail } from "lucide-react";
 import { GadexLogo } from "@/components/ui/GadexLogo";
 import { usePortfolioData } from "@/context/PortfolioContext";
 
 export const Footer: React.FC = () => {
+  const pathname = usePathname();
   const { data: portfolioData } = usePortfolioData();
   const { personalInfo } = portfolioData;
+
+  if (pathname?.startsWith("/admin")) {
+    return null;
+  }
 
   const scrollToTop = () => {
     window.scrollTo({
