@@ -19,9 +19,60 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "BigSam (Gadex®) — Full-Stack Engineer",
+  metadataBase: new URL("https://bigsam-portfolio.vercel.app"),
+  title: {
+    default: "Samuel (BigSam) | Gadex® — Full-Stack Engineer",
+    template: "%s | Samuel (Gadex®)",
+  },
   description:
-    "BigSam (Gadex®) — Full-Stack Engineer architecting scalable full-stack systems, modern APIs, and high-performance digital products.",
+    "Portfolio of Samuel (BigSam / Gadex®), a Full-Stack Engineer architecting scalable web applications, resilient backend APIs, and high-performance user interfaces.",
+  keywords: [
+    "Samuel",
+    "BigSam",
+    "Gadex",
+    "Full-Stack Engineer",
+    "Next.js Developer",
+    "TypeScript",
+    "Software Engineer Portfolio",
+    "React",
+    "Node.js",
+    "Frontend Architect",
+  ],
+  authors: [{ name: "BigSam (Gadex®)", url: "https://github.com/akanbisamuel045-tech" }],
+  creator: "BigSam",
+  icons: {
+    icon: "/assets/gadex-logo.png",
+    apple: "/assets/gadex-logo.png",
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "https://bigsam-portfolio.vercel.app",
+    title: "Samuel (BigSam) | Gadex® — Full-Stack Engineer",
+    description:
+      "Portfolio of Samuel (BigSam / Gadex®), a Full-Stack Engineer architecting scalable web applications, resilient backend APIs, and high-performance user interfaces.",
+    siteName: "Gadex® Engineering Portfolio",
+    images: [
+      {
+        url: "/assets/samuel-impact.png",
+        width: 1200,
+        height: 630,
+        alt: "BigSam (Gadex®) — Full-Stack Engineer",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Samuel (BigSam) | Gadex® — Full-Stack Engineer",
+    description:
+      "Portfolio of Samuel (BigSam / Gadex®), a Full-Stack Engineer architecting scalable web applications, resilient backend APIs, and high-performance user interfaces.",
+    images: ["/assets/samuel-impact.png"],
+    creator: "@akanbisamuel",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function RootLayout({
