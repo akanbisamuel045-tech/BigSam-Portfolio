@@ -3,9 +3,10 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { SectionHeader } from "@/components/ui/SectionHeader";
-import { portfolioData } from "@/data/portfolioData";
+import { usePortfolioData } from "@/context/PortfolioContext";
 
 export const ProcessSection: React.FC = () => {
+  const { data: portfolioData } = usePortfolioData();
   const { processSteps } = portfolioData;
 
   const renderIcon = (iconType: string) => {

@@ -4,9 +4,10 @@ import React from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { SectionHeader } from "@/components/ui/SectionHeader";
-import { portfolioData } from "@/data/portfolioData";
+import { usePortfolioData } from "@/context/PortfolioContext";
 
 export const TestimonialsSection: React.FC = () => {
+  const { data: portfolioData } = usePortfolioData();
   const { testimonials } = portfolioData;
 
   return (

@@ -7,10 +7,11 @@ import { SectionHeader } from "@/components/ui/SectionHeader";
 import { WhyChooseMeBento } from "@/components/home/WhyChooseMeBento";
 import { FaqAccordion } from "@/components/shared/FaqAccordion";
 import { CtaBanner } from "@/components/layout/CtaBanner";
-import { portfolioData } from "@/data/portfolioData";
+import { usePortfolioData } from "@/context/PortfolioContext";
 
 export default function AboutPage() {
-  const { personalInfo, stats, achievements, career } = portfolioData;
+  const { data: portfolioData } = usePortfolioData();
+  const { personalInfo, stats, achievements, career, clientLogos } = portfolioData;
 
   const editorialStrip = [
     {
@@ -49,7 +50,7 @@ export default function AboutPage() {
     "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100&auto=format&fit=crop&q=80",
   ];
 
-  const clientBrands = [
+  const fallbackBrands = [
     "GADEX LABS",
     "NEXTWAVE TECH",
     "CLOUDSCALE",
@@ -66,6 +67,7 @@ export default function AboutPage() {
     "VECTOR DEV",
     "QUANTUM STACK",
   ];
+  const clientBrands = clientLogos && clientLogos.length > 0 ? clientLogos : fallbackBrands;
 
   const achievementIcons = [
     // 0: Geometric 8-point Asterisk

@@ -5,7 +5,7 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { Plus, Github, Linkedin, Twitter, MessageCircle } from "lucide-react";
 import { GadexLogo } from "@/components/ui/GadexLogo";
-import { portfolioData } from "@/data/portfolioData";
+import { usePortfolioData } from "@/context/PortfolioContext";
 import { cn } from "@/lib/utils";
 
 export interface FullScreenMenuProps {
@@ -17,6 +17,7 @@ export const FullScreenMenu: React.FC<FullScreenMenuProps> = ({
   isOpen,
   onClose,
 }) => {
+  const { data: portfolioData } = usePortfolioData();
   const { personalInfo } = portfolioData;
 
   // Lock body scroll when drawer is open and listen for Escape key

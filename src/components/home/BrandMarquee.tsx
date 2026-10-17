@@ -1,9 +1,9 @@
 "use client";
 
-import React from "react";
-import { portfolioData } from "@/data/portfolioData";
+import { usePortfolioData } from "@/context/PortfolioContext";
 
 export const BrandMarquee: React.FC = () => {
+  const { data: portfolioData } = usePortfolioData();
   const { clientLogos } = portfolioData;
 
   return (

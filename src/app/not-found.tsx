@@ -6,9 +6,10 @@ import { Compass } from "lucide-react";
 import { ArrowButton } from "@/components/ui/ArrowButton";
 import { GridCrosshair } from "@/components/ui/GridCrosshair";
 import { CtaBanner } from "@/components/layout/CtaBanner";
-import { portfolioData } from "@/data/portfolioData";
+import { usePortfolioData } from "@/context/PortfolioContext";
 
 export default function NotFound() {
+  const { data: portfolioData } = usePortfolioData();
   const { personalInfo } = portfolioData;
 
   return (

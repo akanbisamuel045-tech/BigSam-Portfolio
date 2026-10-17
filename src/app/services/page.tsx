@@ -6,9 +6,10 @@ import { motion } from "framer-motion";
 import { Sparkles } from "lucide-react";
 import { ArrowButton } from "@/components/ui/ArrowButton";
 import { CtaBanner } from "@/components/layout/CtaBanner";
-import { portfolioData } from "@/data/portfolioData";
+import { usePortfolioData } from "@/context/PortfolioContext";
 
 export default function ServicesPage() {
+  const { data: portfolioData } = usePortfolioData();
   const { personalInfo, services } = portfolioData;
   const [activeIdx, setActiveIdx] = useState<number>(0);
   const [showAll, setShowAll] = useState<boolean>(true);

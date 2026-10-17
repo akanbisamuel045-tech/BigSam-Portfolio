@@ -6,9 +6,10 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { GridCrosshair } from "@/components/ui/GridCrosshair";
-import { portfolioData } from "@/data/portfolioData";
+import { usePortfolioData } from "@/context/PortfolioContext";
 
 export const HeroSection: React.FC = () => {
+  const { data: portfolioData } = usePortfolioData();
   const { personalInfo, heroFeaturedProject } = portfolioData;
 
   return (

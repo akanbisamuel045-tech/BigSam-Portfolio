@@ -4,9 +4,10 @@ import React from "react";
 import Link from "next/link";
 import { ArrowUpRight, ArrowUp, Github, Linkedin, MessageCircle, Mail } from "lucide-react";
 import { GadexLogo } from "@/components/ui/GadexLogo";
-import { portfolioData } from "@/data/portfolioData";
+import { usePortfolioData } from "@/context/PortfolioContext";
 
 export const Footer: React.FC = () => {
+  const { data: portfolioData } = usePortfolioData();
   const { personalInfo } = portfolioData;
 
   const scrollToTop = () => {

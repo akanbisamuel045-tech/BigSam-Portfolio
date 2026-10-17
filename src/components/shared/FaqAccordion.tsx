@@ -3,9 +3,10 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Plus, Minus, Sparkles } from "lucide-react";
-import { portfolioData } from "@/data/portfolioData";
+import { usePortfolioData } from "@/context/PortfolioContext";
 
 export const FaqAccordion: React.FC = () => {
+  const { data: portfolioData } = usePortfolioData();
   const { faqs } = portfolioData;
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 

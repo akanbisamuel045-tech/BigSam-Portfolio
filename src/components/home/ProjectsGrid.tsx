@@ -6,7 +6,8 @@ import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { ArrowButton } from "@/components/ui/ArrowButton";
-import { portfolioData, ProjectItem } from "@/data/portfolioData";
+import { ProjectItem } from "@/data/portfolioData";
+import { usePortfolioData } from "@/context/PortfolioContext";
 import { cn } from "@/lib/utils";
 
 interface ProjectCardProps {
@@ -73,6 +74,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, aspectClass }) => {
 };
 
 export const ProjectsGrid: React.FC = () => {
+  const { data: portfolioData } = usePortfolioData();
   const { projects } = portfolioData;
 
   const project1 = projects[0];

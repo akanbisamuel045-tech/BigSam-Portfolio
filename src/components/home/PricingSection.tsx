@@ -4,10 +4,11 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { SectionHeader } from "@/components/ui/SectionHeader";
-import { portfolioData } from "@/data/portfolioData";
+import { usePortfolioData } from "@/context/PortfolioContext";
 import { cn } from "@/lib/utils";
 
 export const PricingSection: React.FC = () => {
+  const { data: portfolioData } = usePortfolioData();
   const { pricing, personalInfo } = portfolioData;
   const [billingMode, setBillingMode] = useState<"monthly" | "projectBased">("projectBased");
 

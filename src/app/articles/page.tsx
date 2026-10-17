@@ -5,9 +5,10 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { ArrowButton } from "@/components/ui/ArrowButton";
 import { CtaBanner } from "@/components/layout/CtaBanner";
-import { portfolioData } from "@/data/portfolioData";
+import { usePortfolioData } from "@/context/PortfolioContext";
 
 export default function ArticlesPage() {
+  const { data: portfolioData } = usePortfolioData();
   const { personalInfo, articles } = portfolioData;
 
   return (

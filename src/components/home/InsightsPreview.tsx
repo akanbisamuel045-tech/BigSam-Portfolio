@@ -7,9 +7,10 @@ import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { ArrowButton } from "@/components/ui/ArrowButton";
-import { portfolioData } from "@/data/portfolioData";
+import { usePortfolioData } from "@/context/PortfolioContext";
 
 export const InsightsPreview: React.FC = () => {
+  const { data: portfolioData } = usePortfolioData();
   const articles = portfolioData.articles.slice(0, 3);
   const featuredArticle = articles[0];
   const sideArticles = articles.slice(1, 3);

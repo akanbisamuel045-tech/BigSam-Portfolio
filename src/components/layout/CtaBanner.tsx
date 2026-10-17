@@ -4,9 +4,10 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { GridCrosshair } from "@/components/ui/GridCrosshair";
-import { portfolioData } from "@/data/portfolioData";
+import { usePortfolioData } from "@/context/PortfolioContext";
 
 export const CtaBanner: React.FC = () => {
+  const { data: portfolioData } = usePortfolioData();
   const { personalInfo } = portfolioData;
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);

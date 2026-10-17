@@ -7,9 +7,10 @@ import { SectionHeader } from "@/components/ui/SectionHeader";
 import { ArrowButton } from "@/components/ui/ArrowButton";
 import { FaqAccordion } from "@/components/shared/FaqAccordion";
 import { CtaBanner } from "@/components/layout/CtaBanner";
-import { portfolioData } from "@/data/portfolioData";
+import { usePortfolioData } from "@/context/PortfolioContext";
 
 export default function ContactPage() {
+  const { data: portfolioData } = usePortfolioData();
   const { personalInfo } = portfolioData;
 
   const [firstName, setFirstName] = useState("");

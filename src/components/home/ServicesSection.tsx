@@ -6,10 +6,11 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { SectionHeader } from "@/components/ui/SectionHeader";
-import { portfolioData } from "@/data/portfolioData";
+import { usePortfolioData } from "@/context/PortfolioContext";
 import { cn } from "@/lib/utils";
 
 export const ServicesSection: React.FC = () => {
+  const { data: portfolioData } = usePortfolioData();
   const services = portfolioData.services.slice(0, 4);
   const [hoveredIndex, setHoveredIndex] = useState<number>(0);
 

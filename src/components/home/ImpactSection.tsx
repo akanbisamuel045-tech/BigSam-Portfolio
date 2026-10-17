@@ -5,9 +5,10 @@ import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { GridCrosshair } from "@/components/ui/GridCrosshair";
-import { portfolioData } from "@/data/portfolioData";
+import { usePortfolioData } from "@/context/PortfolioContext";
 
 export const ImpactSection: React.FC = () => {
+  const { data: portfolioData } = usePortfolioData();
   const { personalInfo, stats } = portfolioData;
 
   return (
