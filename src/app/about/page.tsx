@@ -5,6 +5,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { WhyChooseMeBento } from "@/components/home/WhyChooseMeBento";
+import { FaqAccordion } from "@/components/shared/FaqAccordion";
 import { CtaBanner } from "@/components/layout/CtaBanner";
 import { portfolioData } from "@/data/portfolioData";
 
@@ -458,7 +459,12 @@ export default function AboutPage() {
       <WhyChooseMeBento />
 
       {/* ============================================================== */}
-      {/* SECTION 6: PRE-FOOTER CTA BANNER                                */}
+      {/* SECTION 6: SHARED FREQUENT QUESTIONS ACCORDION (00:57-01:01)   */}
+      {/* ============================================================== */}
+      <FaqAccordion />
+
+      {/* ============================================================== */}
+      {/* SECTION 7: PRE-FOOTER CTA BANNER                                */}
       {/* ============================================================== */}
       <CtaBanner />
     </div>
