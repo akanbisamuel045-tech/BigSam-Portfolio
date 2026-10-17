@@ -1,18 +1,205 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useMemo, useCallback } from "react";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
-import { LogOut, ExternalLink, ShieldCheck, CheckCircle2, ArrowRight } from "lucide-react";
-import { GadexLogo } from "@/components/ui/GadexLogo";
-import { GridCrosshair } from "@/components/ui/GridCrosshair";
+import {
+  AdminSidebar,
+  AdminTabId,
+  AdminSidebarCounts,
+} from "@/components/admin/AdminSidebar";
+import { AdminHeader } from "@/components/admin/AdminHeader";
+import { OverviewTab } from "@/components/admin/editors/OverviewTab";
+import { usePortfolioData } from "@/context/PortfolioContext";
+import { PortfolioData } from "@/data/portfolioData";
+import {
+  CheckCircle2,
+  AlertCircle,
+  X,
+  ExternalLink,
+  Layers,
+} from "lucide-react";
 
-export default function AdminPage() {
+export default function AdminControlCenter() {
   const router = useRouter();
-  const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const { data: currentData, refreshData } = usePortfolioData();
 
-  const handleLogout = async () => {
-    setIsLoggingOut(true);
+  // Active Tab State
+  const [activeTab, setActiveTab] = useState<AdminTabId>("overview");
+
+  // Draft Data State
+  const [draftData, setDraftData] = useState<PortfolioData>(currentData);
+  const [isSaving, setIsSaving] = useState(false);
+  const [lastSavedAt, setLastSavedAt] = useState<string | null>(null);
+  const [isOpenMobile, setIsOpenMobile] = useState(false);
+
+  // Toast Notification State
+  const [toast, setToast] = useState<{
+    message: string;
+    type: "success" | "error";
+  } | null>(null);
+
+  // Sync draft data when context data loads initially
+  useEffect(() => {
+    if (currentData) {
+      setDraftData(currentData);
+    }
+  }, [currentData]);
+
+  // Toast auto-dismiss timer
+  useEffect(() => {
+    if (toast) {
+      const timer = setTimeout(() => setToast(null), 4000);
+      return () => clearTimeout(timer);
+    }
+  }, [toast]);
+
+  // Compute Unsaved Changes
+  const hasUnsavedChanges = useMemo(() => {
+    if (!currentData || !draftData) return false;
+    return JSON.stringify(currentData) !== JSON.stringify(draftData);
+  }, [currentData, draftData]);
+
+  // Dynamic Item Counts
+  const counts: AdminSidebarCounts = useMemo(() => {
+    return {
+      services: draftData?.services?.length || 0,
+      projects: draftData?.projects?.length || 0,
+      articles: draftData?.articles?.length || 0,
+      testimonials: draftData?.testimonials?.length || 0,
+      faqs: draftData?.faqs?.length || 0,
+      achievements: draftData?.achievements?.length || 0,
+    };
+  }, [draftData]);
+
+  // Active Tab Titles
+  const activeTabTitles: Record<AdminTabId, string> = {
+    overview: "System Overview",
+    identity: "Identity & Hero Configuration",
+    stats: "Stats & Brand Marquee",
+    services: "Services Editor (001–006)",
+    projects: "Portfolio Projects Editor",
+    process: "Engineering Process & Bento Grid",
+    pricing: "Pricing Tiers & Reviews",
+    about: "About Story, Awards & Career",
+    articles: "Articles & FAQ Knowledgebase",
+  };
+
+  // Save All Changes Handler
+  const handleSave = useCallback(async () => {
+    if (isSaving || !hasUnsavedChanges) return;
+    setIsSaving(true);
+
+    try {
+      const response = await fetch("/api/admin/content", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(draftData),
+      });
+
+      const result = await response.json();
+
+      if (response.ok && result.success) {
+        // Refresh local portfolio context
+        await refreshData();
+        setLastSavedAt(new Date().toISOString());
+
+        // Broadcast to other tabs
+        if (typeof window !== "undefined") {
+          try {
+            const channel = new BroadcastChannel("gadex_cms_channel");
+            channel.postMessage({ type: "SYNC_CMS", data: draftData });
+            channel.close();
+          } catch {
+            // fallback
+          }
+          window.dispatchEvent(
+            new CustomEvent("cms-data-updated", { detail: draftData })
+          );
+        }
+
+        setToast({
+          type: "success",
+          message: "All portfolio changes successfully published to live CMS!",
+        });
+      } else {
+        setToast({
+          type: "error",
+          message: result.error || "Failed to save portfolio changes.",
+        });
+      }
+    } catch {
+      setToast({
+        type: "error",
+        message: "Network error saving portfolio changes. Please try again.",
+      });
+    } finally {
+      setIsSaving(false);
+    }
+  }, [draftData, hasUnsavedChanges, isSaving, refreshData]);
+
+  // Discard Changes Handler
+  const handleDiscard = useCallback(() => {
+    setDraftData(currentData);
+    setToast({
+      type: "success",
+      message: "Pending draft changes discarded.",
+    });
+  }, [currentData]);
+
+  // Reset to Default Seed Handler
+  const handleResetToDefault = useCallback(async () => {
+    try {
+      const response = await fetch("/api/admin/content", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ action: "reset" }),
+      });
+
+      const result = await response.json();
+
+      if (response.ok && result.success) {
+        setDraftData(result.data);
+        await refreshData();
+        setLastSavedAt(new Date().toISOString());
+
+        // Broadcast reset event
+        if (typeof window !== "undefined") {
+          try {
+            const channel = new BroadcastChannel("gadex_cms_channel");
+            channel.postMessage({ type: "SYNC_CMS", data: result.data });
+            channel.close();
+          } catch {
+            // fallback
+          }
+          window.dispatchEvent(
+            new CustomEvent("cms-data-updated", { detail: result.data })
+          );
+        }
+
+        setToast({
+          type: "success",
+          message: "Portfolio database reset to factory seed.",
+        });
+      } else {
+        setToast({
+          type: "error",
+          message: result.error || "Failed to reset portfolio database.",
+        });
+      }
+    } catch {
+      setToast({
+        type: "error",
+        message: "Network error resetting database. Please try again.",
+      });
+    }
+  }, [refreshData]);
+
+  // Logout Handler
+  const handleLogout = useCallback(async () => {
     try {
       await fetch("/api/admin/auth", {
         method: "DELETE",
@@ -21,159 +208,125 @@ export default function AdminPage() {
       router.refresh();
     } catch {
       router.push("/admin/login");
-    } finally {
-      setIsLoggingOut(false);
     }
-  };
+  }, [router]);
+
+  // Keyboard shortcut Ctrl+S / Cmd+S
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === "s") {
+        e.preventDefault();
+        if (hasUnsavedChanges && !isSaving) {
+          handleSave();
+        }
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [handleSave, hasUnsavedChanges, isSaving]);
 
   return (
-    <div className="min-h-screen w-full bg-[#111111] text-white flex flex-col justify-between relative overflow-hidden select-none">
-      {/* Background Architectural Grid Lines */}
-      <div className="absolute inset-0 pointer-events-none max-w-[1600px] mx-auto border-x border-white/[0.04] grid grid-cols-4 z-0">
-        <div className="border-r border-white/[0.04] h-full" />
-        <div className="border-r border-white/[0.04] h-full" />
-        <div className="border-r border-white/[0.04] h-full" />
-        <div className="h-full" />
+    <div className="min-h-screen w-full bg-[#F6F6F6] text-[#111111] flex flex-row relative font-body">
+      {/* 1. Left Persistent / Mobile Responsive Sidebar */}
+      <AdminSidebar
+        activeTab={activeTab}
+        onSelectTab={setActiveTab}
+        counts={counts}
+        isOpenMobile={isOpenMobile}
+        onCloseMobile={() => setIsOpenMobile(false)}
+        onLogout={handleLogout}
+      />
+
+      {/* 2. Main Studio Canvas */}
+      <div className="flex-1 flex flex-col min-w-0 min-h-screen">
+        {/* Sticky Action Header */}
+        <AdminHeader
+          activeTabTitle={activeTabTitles[activeTab]}
+          hasUnsavedChanges={hasUnsavedChanges}
+          isSaving={isSaving}
+          lastSavedAt={lastSavedAt}
+          onSave={handleSave}
+          onDiscard={handleDiscard}
+          onResetToDefault={handleResetToDefault}
+          onOpenMobileMenu={() => setIsOpenMobile(true)}
+        />
+
+        {/* Content Workspace */}
+        <main className="flex-1 p-6 md:p-10 max-w-[1400px] w-full mx-auto">
+          {activeTab === "overview" && (
+            <OverviewTab
+              draftData={draftData}
+              onSelectTab={setActiveTab}
+              onResetToDefault={handleResetToDefault}
+            />
+          )}
+
+          {activeTab !== "overview" && (
+            <div className="bg-white border border-[#E2E2E2] p-8 md:p-12 text-center space-y-6">
+              <div className="w-14 h-14 bg-[#111111] text-[#E84511] flex items-center justify-center mx-auto shadow-md">
+                <Layers className="w-7 h-7" />
+              </div>
+
+              <div>
+                <div className="inline-flex items-center gap-2 px-3 py-1 bg-orange-50 border border-orange-200 text-[#E84511] text-[10px] font-extrabold uppercase tracking-widest rounded-full mb-3">
+                  <span>STAGE 4 VERIFICATION SHELL ACTIVE</span>
+                </div>
+                <h2 className="text-2xl md:text-3xl font-extrabold uppercase tracking-tight text-[#111111] font-display">
+                  {activeTabTitles[activeTab]}
+                </h2>
+                <p className="text-xs md:text-sm text-[#8E8E8E] max-w-lg mx-auto mt-2 leading-relaxed">
+                  The navigation shell, tab routing, unsaved change tracking, and keyboard shortcuts are functioning. Deep field editors for this section will be attached in Stages 5–11.
+                </p>
+              </div>
+
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-4">
+                <button
+                  onClick={() => setActiveTab("overview")}
+                  className="px-5 py-2.5 bg-[#111111] hover:bg-black text-white text-xs font-extrabold uppercase tracking-wider transition-colors cursor-pointer"
+                >
+                  RETURN TO OVERVIEW
+                </button>
+                <a
+                  href="/"
+                  target="_blank"
+                  className="px-5 py-2.5 bg-[#F6F6F6] hover:bg-[#E2E2E2] text-[#111111] text-xs font-extrabold uppercase tracking-wider transition-colors flex items-center gap-1.5 border border-[#E2E2E2]"
+                >
+                  <span>VIEW LIVE PAGE</span>
+                  <ExternalLink className="w-3.5 h-3.5 text-[#E84511]" />
+                </a>
+              </div>
+            </div>
+          )}
+        </main>
       </div>
 
-      {/* Ambient Orange Glow */}
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#E84511]/10 rounded-full blur-[140px] pointer-events-none z-0" />
-
-      {/* Top Header Bar */}
-      <header className="w-full max-w-[1600px] mx-auto px-6 md:px-10 py-5 flex items-center justify-between border-b border-white/[0.06] relative z-20">
-        <div className="flex items-center gap-6">
-          <GadexLogo variant="dark" size="sm" />
-          <div className="hidden sm:flex items-center gap-2 px-3 py-1 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-[10px] font-extrabold uppercase tracking-widest rounded-full">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-            <span>SESSION ACTIVE • AUTHENTICATED</span>
-          </div>
-        </div>
-
-        <div className="flex items-center gap-4">
-          <Link
-            href="/"
-            target="_blank"
-            className="text-xs font-bold uppercase tracking-widest text-[#8E8E8E] hover:text-white transition-colors flex items-center gap-1.5"
+      {/* 3. Floating Toast Notification */}
+      {toast && (
+        <div className="fixed bottom-6 right-6 z-50 animate-in slide-in-from-bottom duration-300">
+          <div
+            className={`flex items-center gap-3 px-4 py-3 shadow-xl border text-xs font-bold ${
+              toast.type === "success"
+                ? "bg-[#111111] text-white border-emerald-500/50"
+                : "bg-red-950 text-red-100 border-red-500/50"
+            }`}
           >
-            <span>LIVE SITE</span>
-            <ExternalLink className="w-3.5 h-3.5" />
-          </Link>
-
-          <button
-            onClick={handleLogout}
-            disabled={isLoggingOut}
-            className="px-4 py-2 bg-white/10 hover:bg-white/15 text-white text-xs font-bold uppercase tracking-wider transition-colors flex items-center gap-2 border border-white/10 cursor-pointer disabled:opacity-50"
-          >
-            <LogOut className="w-3.5 h-3.5 text-[#E84511]" />
-            <span>{isLoggingOut ? "LOGGING OUT..." : "LOG OUT"}</span>
-          </button>
-        </div>
-      </header>
-
-      {/* Center Stage 3 Verification Card */}
-      <main className="flex-1 flex items-center justify-center px-6 py-12 relative z-20">
-        <div className="w-full max-w-2xl bg-[#1A1A1A] border border-white/10 p-8 md:p-12 shadow-2xl relative">
-          {/* Corner Crosshairs */}
-          <GridCrosshair position="top-left" variant="dark" />
-          <GridCrosshair position="top-right" variant="dark" />
-          <GridCrosshair position="bottom-left" variant="dark" />
-          <GridCrosshair position="bottom-right" variant="dark" />
-
-          {/* Badge */}
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#E84511]/10 border border-[#E84511]/30 rounded-full text-[10px] font-extrabold tracking-widest uppercase text-[#E84511] mb-5">
-            <ShieldCheck className="w-3.5 h-3.5" />
-            <span>ADMIN STAGE 3 • SECURITY GATE VERIFIED</span>
-          </div>
-
-          {/* Title */}
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold uppercase tracking-tight text-white mb-4 font-display">
-            STAGE 3 AUTHENTICATED — GADEX® ADMIN CONTROL CENTER UNLOCKED
-          </h1>
-
-          <p className="text-sm text-[#8E8E8E] mb-8 leading-relaxed">
-            Stateless cookie session authentication, Next.js Edge middleware route protection, and mutating API authorization gates are operating seamlessly.
-          </p>
-
-          {/* Feature Checklist */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
-            <div className="p-4 bg-[#111111] border border-white/5 flex items-start gap-3">
-              <CheckCircle2 className="w-4 h-4 text-emerald-400 mt-0.5 shrink-0" />
-              <div>
-                <h4 className="text-xs font-extrabold uppercase tracking-wider text-white">
-                  Cookie Session Security
-                </h4>
-                <p className="text-[11px] text-[#8E8E8E] mt-0.5">
-                  HTTP-Only signed cookie (7-day validity) with Web Crypto SHA-256.
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 bg-[#111111] border border-white/5 flex items-start gap-3">
-              <CheckCircle2 className="w-4 h-4 text-emerald-400 mt-0.5 shrink-0" />
-              <div>
-                <h4 className="text-xs font-extrabold uppercase tracking-wider text-white">
-                  Edge Route Protection
-                </h4>
-                <p className="text-[11px] text-[#8E8E8E] mt-0.5">
-                  Unauthorized traffic to /admin redirected to /admin/login.
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 bg-[#111111] border border-white/5 flex items-start gap-3">
-              <CheckCircle2 className="w-4 h-4 text-emerald-400 mt-0.5 shrink-0" />
-              <div>
-                <h4 className="text-xs font-extrabold uppercase tracking-wider text-white">
-                  Mutating API Guard
-                </h4>
-                <p className="text-[11px] text-[#8E8E8E] mt-0.5">
-                  PUT and POST /api/admin/content guarded by cookie or x-admin-key.
-                </p>
-              </div>
-            </div>
-
-            <div className="p-4 bg-[#111111] border border-white/5 flex items-start gap-3">
-              <CheckCircle2 className="w-4 h-4 text-emerald-400 mt-0.5 shrink-0" />
-              <div>
-                <h4 className="text-xs font-extrabold uppercase tracking-wider text-white">
-                  Clean Studio Isolation
-                </h4>
-                <p className="text-[11px] text-[#8E8E8E] mt-0.5">
-                  Public Navbar, CtaBanner, and Footer hidden on /admin.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Action Row */}
-          <div className="flex flex-col sm:flex-row items-center gap-4 pt-4 border-t border-white/10">
-            <Link
-              href="/"
-              className="w-full sm:w-auto px-6 py-3.5 bg-[#E84511] hover:bg-[#D63B0B] text-white text-xs font-extrabold uppercase tracking-wider flex items-center justify-center gap-2 transition-colors cursor-pointer"
-            >
-              <span>VIEW LIVE FRONTEND</span>
-              <ArrowRight className="w-3.5 h-3.5" />
-            </Link>
-
+            {toast.type === "success" ? (
+              <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+            ) : (
+              <AlertCircle className="w-4 h-4 text-red-400 shrink-0" />
+            )}
+            <span>{toast.message}</span>
             <button
-              onClick={handleLogout}
-              disabled={isLoggingOut}
-              className="w-full sm:w-auto px-6 py-3.5 bg-white/5 hover:bg-white/10 text-white text-xs font-extrabold uppercase tracking-wider flex items-center justify-center gap-2 transition-colors border border-white/10 cursor-pointer"
+              onClick={() => setToast(null)}
+              className="ml-2 text-white/50 hover:text-white transition-colors cursor-pointer"
+              aria-label="Close notification"
             >
-              <LogOut className="w-3.5 h-3.5 text-[#E84511]" />
-              <span>TEST LOGOUT CYCLE</span>
+              <X className="w-3.5 h-3.5" />
             </button>
           </div>
         </div>
-      </main>
-
-      {/* Bottom Architectural Security Footer */}
-      <footer className="w-full max-w-[1600px] mx-auto px-6 md:px-10 py-5 flex flex-col sm:flex-row items-center justify-between text-[11px] text-[#8E8E8E]/70 border-t border-white/[0.06] relative z-20">
-        <div>GADEX® ARCHITECTURAL CMS • VERSION 2.0</div>
-        <div className="font-mono text-[10px] mt-1 sm:mt-0 tracking-wider">
-          AUTHENTICATED OPERATOR SESSION • ALL PRIVILEGES ACTIVE
-        </div>
-      </footer>
+      )}
     </div>
   );
 }
