@@ -15,6 +15,8 @@ import { ServicesEditorTab } from "@/components/admin/editors/ServicesEditorTab"
 import { ProjectsEditorTab } from "@/components/admin/editors/ProjectsEditorTab";
 import { ProcessBentoTab } from "@/components/admin/editors/ProcessBentoTab";
 import { PricingReviewsTab } from "@/components/admin/editors/PricingReviewsTab";
+import { AboutCareerTab } from "@/components/admin/editors/AboutCareerTab";
+import { ArticlesFaqTab } from "@/components/admin/editors/ArticlesFaqTab";
 import { usePortfolioData } from "@/context/PortfolioContext";
 import { PortfolioData } from "@/data/portfolioData";
 import {
@@ -310,13 +312,29 @@ export default function AdminControlCenter() {
             />
           )}
 
+          {activeTab === "about" && (
+            <AboutCareerTab
+              draftData={draftData}
+              onChange={setDraftData}
+            />
+          )}
+
+          {activeTab === "articles" && (
+            <ArticlesFaqTab
+              draftData={draftData}
+              onChange={setDraftData}
+            />
+          )}
+
           {activeTab !== "overview" &&
             activeTab !== "identity" &&
             activeTab !== "stats" &&
             activeTab !== "services" &&
             activeTab !== "projects" &&
             activeTab !== "process" &&
-            activeTab !== "pricing" && (
+            activeTab !== "pricing" &&
+            activeTab !== "about" &&
+            activeTab !== "articles" && (
             <div className="bg-white border border-[#E2E2E2] p-8 md:p-12 text-center space-y-6">
               <div className="w-14 h-14 bg-[#111111] text-[#E84511] flex items-center justify-center mx-auto shadow-md">
                 <Layers className="w-7 h-7" />
@@ -324,7 +342,7 @@ export default function AdminControlCenter() {
 
               <div>
                 <div className="inline-flex items-center gap-2 px-3 py-1 bg-orange-50 border border-orange-200 text-[#E84511] text-[10px] font-extrabold uppercase tracking-widest rounded-full mb-3">
-                  <span>STAGE 10 SHELL ACTIVE</span>
+                  <span>STAGE 11 COMPLETE</span>
                 </div>
                 <h2 className="text-2xl md:text-3xl font-extrabold uppercase tracking-tight text-[#111111] font-display">
                   {activeTabTitles[activeTab]}
