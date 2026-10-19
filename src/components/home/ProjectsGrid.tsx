@@ -158,6 +158,21 @@ export const ProjectsGrid: React.FC = () => {
               </div>
             )}
           </div>
+
+          {/* ========================================================== */}
+          {/* ROW 4+: ADDITIONAL PROJECTS (2-Column Editorial Grid for 5+ items) */}
+          {/* ========================================================== */}
+          {projects.length > 5 && (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-start pt-6 border-t border-[#EAEAEA]">
+              {projects.slice(5).map((extraProject) => (
+                <ProjectCard
+                  key={extraProject.id}
+                  project={extraProject}
+                  aspectClass="aspect-[16/10]"
+                />
+              ))}
+            </div>
+          )}
         </div>
 
         {/* Bottom CTA Row: Anchored Bottom-Left matching 00:19 */}
