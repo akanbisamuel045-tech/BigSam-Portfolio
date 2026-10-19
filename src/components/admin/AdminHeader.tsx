@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Menu, Save, Loader2, Undo2 } from "lucide-react";
+import { Menu, Save, Loader2, Undo2, Download } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export interface AdminHeaderProps {
@@ -13,6 +13,7 @@ export interface AdminHeaderProps {
   onDiscard: () => void;
   onResetToDefault: () => Promise<void>;
   onOpenMobileMenu: () => void;
+  onExportBackup?: () => void;
 }
 
 export const AdminHeader: React.FC<AdminHeaderProps> = ({
@@ -23,6 +24,7 @@ export const AdminHeader: React.FC<AdminHeaderProps> = ({
   onSave,
   onDiscard,
   onOpenMobileMenu,
+  onExportBackup,
 }) => {
   return (
     <header className="sticky top-0 z-30 w-full bg-white/95 backdrop-blur-md border-b border-[#E2E2E2] px-6 py-4 flex items-center justify-between gap-4 select-none">
@@ -77,6 +79,20 @@ export const AdminHeader: React.FC<AdminHeaderProps> = ({
               </span>
             )}
           </div>
+        )}
+
+        {/* Quick Export / Backup Button */}
+        {onExportBackup && (
+          <button
+            type="button"
+            onClick={onExportBackup}
+            className="hidden sm:flex items-center gap-1.5 px-3.5 py-2.5 bg-[#F6F6F6] hover:bg-[#111111] hover:text-white text-[#111111] text-xs font-extrabold uppercase tracking-wider transition-all border border-[#E2E2E2] cursor-pointer group"
+            title="Download JSON CMS Backup"
+          >
+            <Download className="w-3.5 h-3.5 text-[#E84511] group-hover:text-white transition-colors" />
+            <span className="hidden md:inline">EXPORT / BACKUP</span>
+            <span className="md:hidden">BACKUP</span>
+          </button>
         )}
 
         {/* Primary Save Changes Button */}

@@ -206,6 +206,91 @@ export default function AdminControlCenter() {
     }
   }, [refreshData]);
 
+  // Export JSON Backup Handler
+  const handleExportJSON = useCallback(() => {
+    try {
+      const jsonString = JSON.stringify(draftData, null, 2);
+      const blob = new Blob([jsonString], {
+        type: "application/json;charset=utf-8",
+      });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      const dateStr = new Date().toISOString().slice(0, 10);
+      link.href = url;
+      link.download = `gadex-cms-backup-${dateStr}.json`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+      setToast({
+        type: "success",
+        message: `JSON backup downloaded (gadex-cms-backup-${dateStr}.json)`,
+      });
+    } catch {
+      setToast({
+        type: "error",
+        message: "Failed to generate JSON backup.",
+      });
+    }
+  }, [draftData]);
+
+  // Import JSON Backup Handler
+  const handleImportData = useCallback(
+    async (newData: PortfolioData) => {
+      try {
+        const response = await fetch("/api/admin/content", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ action: "import", data: newData }),
+        });
+
+        const result = await response.json();
+
+        if (response.ok && result.success) {
+          setDraftData(result.data);
+          await refreshData();
+          setLastSavedAt(new Date().toISOString());
+
+          // Broadcast to other tabs
+          if (typeof window !== "undefined") {
+            try {
+              const channel = new BroadcastChannel("gadex_cms_channel");
+              channel.postMessage({ type: "SYNC_CMS", data: result.data });
+              channel.close();
+            } catch {
+              // fallback
+            }
+            window.dispatchEvent(
+              new CustomEvent("cms-data-updated", { detail: result.data })
+            );
+          }
+
+          setToast({
+            type: "success",
+            message: "Database successfully restored from JSON backup!",
+          });
+        } else {
+          setToast({
+            type: "error",
+            message: result.error || "Failed to restore database from backup.",
+          });
+          throw new Error(result.error || "Failed to restore database");
+        }
+      } catch (err: unknown) {
+        const msg =
+          err instanceof Error ? err.message : "Network error restoring backup.";
+        setToast({
+          type: "error",
+          message: msg,
+        });
+        throw err;
+      }
+    },
+    [refreshData]
+  );
+
   // Logout Handler
   const handleLogout = useCallback(async () => {
     try {
@@ -258,6 +343,7 @@ export default function AdminControlCenter() {
           onDiscard={handleDiscard}
           onResetToDefault={handleResetToDefault}
           onOpenMobileMenu={() => setIsOpenMobile(true)}
+          onExportBackup={handleExportJSON}
         />
 
         {/* Content Workspace */}
@@ -267,6 +353,7 @@ export default function AdminControlCenter() {
               draftData={draftData}
               onSelectTab={setActiveTab}
               onResetToDefault={handleResetToDefault}
+              onImportData={handleImportData}
             />
           )}
 

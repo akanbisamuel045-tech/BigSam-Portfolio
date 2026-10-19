@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import Link from "next/link";
 import {
   UserCheck,
@@ -17,23 +17,57 @@ import {
   Phone,
   ShieldAlert,
   Loader2,
+  Download,
+  Upload,
+  FileCode,
+  HardDrive,
+  CheckCircle2,
 } from "lucide-react";
 import { PortfolioData } from "@/data/portfolioData";
 import { AdminTabId } from "@/components/admin/AdminSidebar";
+import { TypeScriptExportModal } from "@/components/admin/TypeScriptExportModal";
 
 export interface OverviewTabProps {
   draftData: PortfolioData;
   onSelectTab: (tab: AdminTabId) => void;
   onResetToDefault: () => Promise<void>;
+  onImportData?: (newData: PortfolioData) => Promise<void>;
 }
+
+const REQUIRED_TOP_LEVEL_KEYS: (keyof PortfolioData)[] = [
+  "personalInfo",
+  "heroFeaturedProject",
+  "stats",
+  "clientLogos",
+  "services",
+  "projects",
+  "processSteps",
+  "testimonials",
+  "pricing",
+  "achievements",
+  "career",
+  "articles",
+  "faqs",
+];
 
 export const OverviewTab: React.FC<OverviewTabProps> = ({
   draftData,
   onSelectTab,
   onResetToDefault,
+  onImportData,
 }) => {
   const [showResetConfirm, setShowResetConfirm] = useState(false);
   const [isResetting, setIsResetting] = useState(false);
+  const [showCodeModal, setShowCodeModal] = useState(false);
+
+  // Import feedback states
+  const [isImporting, setIsImporting] = useState(false);
+  const [importMessage, setImportMessage] = useState<{
+    text: string;
+    type: "success" | "error";
+  } | null>(null);
+
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleReset = async () => {
     setIsResetting(true);
@@ -42,6 +76,88 @@ export const OverviewTab: React.FC<OverviewTabProps> = ({
       setShowResetConfirm(false);
     } finally {
       setIsResetting(false);
+    }
+  };
+
+  // Tool 1: Download JSON Backup
+  const handleExportJSON = () => {
+    try {
+      const jsonString = JSON.stringify(draftData, null, 2);
+      const blob = new Blob([jsonString], { type: "application/json;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      const dateStr = new Date().toISOString().slice(0, 10);
+      link.href = url;
+      link.download = `gadex-cms-backup-${dateStr}.json`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    } catch {
+      // fallback
+    }
+  };
+
+  // Tool 2: Import / Restore JSON Backup
+  const handleTriggerImport = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+      fileInputRef.current.click();
+    }
+  };
+
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setIsImporting(true);
+    setImportMessage(null);
+
+    try {
+      const text = await file.text();
+      const parsed = JSON.parse(text) as PortfolioData;
+
+      if (!parsed || typeof parsed !== "object") {
+        throw new Error("Invalid backup file: Payload is not a valid JSON object.");
+      }
+
+      // Validate all 13 required top-level keys
+      for (const key of REQUIRED_TOP_LEVEL_KEYS) {
+        if (!(key in parsed)) {
+          throw new Error(`Backup file is missing required section: '${key}'.`);
+        }
+      }
+
+      if (onImportData) {
+        await onImportData(parsed);
+      } else {
+        // Fallback direct POST to API
+        const response = await fetch("/api/admin/content", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ action: "import", data: parsed }),
+        });
+        const result = await response.json();
+        if (!response.ok || !result.success) {
+          throw new Error(result.error || "Failed to restore database from backup.");
+        }
+      }
+
+      setImportMessage({
+        text: `Successfully restored portfolio database from ${file.name}`,
+        type: "success",
+      });
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : "Failed to import JSON backup.";
+      setImportMessage({
+        text: msg,
+        type: "error",
+      });
+    } finally {
+      setIsImporting(false);
+      setTimeout(() => setImportMessage(null), 6000);
     }
   };
 
@@ -213,7 +329,142 @@ export const OverviewTab: React.FC<OverviewTabProps> = ({
         </div>
       </div>
 
-      {/* 4. System Maintenance & Default Seed Reset */}
+      {/* 4. Data Portability, JSON Backup & TypeScript Code Generator */}
+      <div className="bg-white border border-[#E2E2E2] p-6 md:p-8 space-y-6 shadow-sm">
+        <div className="flex items-center justify-between pb-4 border-b border-[#EAEAEA]">
+          <div className="flex items-center gap-2.5">
+            <span className="p-1.5 bg-[#111111] text-[#E84511]">
+              <HardDrive className="w-4 h-4" />
+            </span>
+            <div>
+              <h3 className="text-sm font-extrabold uppercase tracking-wider text-[#111111] font-display">
+                Data Portability, JSON Backup &amp; TypeScript Source Generator
+              </h3>
+              <p className="text-xs text-[#777777] mt-0.5">
+                Export portable JSON backups, restore historical snapshots, or generate clean TypeScript code matching <code className="text-[#111111] font-mono">src/data/portfolioData.ts</code>.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Action Buttons Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          {/* Tool 1: Download JSON Backup */}
+          <button
+            type="button"
+            onClick={handleExportJSON}
+            className="p-5 bg-[#FAFAFA] border border-[#E2E2E2] hover:border-[#111111] text-left transition-all cursor-pointer group flex flex-col justify-between"
+          >
+            <div>
+              <div className="flex items-center justify-between mb-3">
+                <span className="p-2 bg-white border border-[#E2E2E2] text-[#111111] group-hover:bg-[#111111] group-hover:text-[#E84511] transition-colors">
+                  <Download className="w-4 h-4" />
+                </span>
+                <span className="text-[10px] font-mono font-bold uppercase text-[#888888]">
+                  .JSON EXPORT
+                </span>
+              </div>
+              <h4 className="text-xs font-extrabold uppercase tracking-wider text-[#111111] mb-1">
+                Download JSON Backup
+              </h4>
+              <p className="text-[11px] text-[#777777] leading-relaxed">
+                Save an exact snapshot of your entire CMS dataset as a downloadable JSON file.
+              </p>
+            </div>
+            <div className="mt-4 pt-3 border-t border-[#EAEAEA] text-[11px] font-extrabold uppercase tracking-wider text-[#E84511] flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+              <span>EXPORT BACKUP</span>
+              <ArrowRight className="w-3 h-3" />
+            </div>
+          </button>
+
+          {/* Tool 2: Import / Restore JSON Backup */}
+          <button
+            type="button"
+            onClick={handleTriggerImport}
+            disabled={isImporting}
+            className="p-5 bg-[#FAFAFA] border border-[#E2E2E2] hover:border-[#111111] text-left transition-all cursor-pointer group flex flex-col justify-between disabled:opacity-50"
+          >
+            <div>
+              <div className="flex items-center justify-between mb-3">
+                <span className="p-2 bg-white border border-[#E2E2E2] text-[#111111] group-hover:bg-[#111111] group-hover:text-[#E84511] transition-colors">
+                  <Upload className="w-4 h-4" />
+                </span>
+                <span className="text-[10px] font-mono font-bold uppercase text-[#888888]">
+                  RESTORE
+                </span>
+              </div>
+              <h4 className="text-xs font-extrabold uppercase tracking-wider text-[#111111] mb-1">
+                Import JSON Backup
+              </h4>
+              <p className="text-[11px] text-[#777777] leading-relaxed">
+                Upload and validate a previous JSON backup to restore all portfolio sections instantly.
+              </p>
+            </div>
+            <div className="mt-4 pt-3 border-t border-[#EAEAEA] text-[11px] font-extrabold uppercase tracking-wider text-[#E84511] flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+              <span>{isImporting ? "IMPORTING..." : "RESTORE JSON"}</span>
+              <ArrowRight className="w-3 h-3" />
+            </div>
+          </button>
+
+          {/* Tool 3: View / Copy TypeScript Source */}
+          <button
+            type="button"
+            onClick={() => setShowCodeModal(true)}
+            className="p-5 bg-[#FAFAFA] border border-[#E2E2E2] hover:border-[#111111] text-left transition-all cursor-pointer group flex flex-col justify-between"
+          >
+            <div>
+              <div className="flex items-center justify-between mb-3">
+                <span className="p-2 bg-white border border-[#E2E2E2] text-[#111111] group-hover:bg-[#111111] group-hover:text-[#E84511] transition-colors">
+                  <FileCode className="w-4 h-4" />
+                </span>
+                <span className="text-[10px] font-mono font-bold uppercase text-[#888888]">
+                  .TS GENERATOR
+                </span>
+              </div>
+              <h4 className="text-xs font-extrabold uppercase tracking-wider text-[#111111] mb-1">
+                TypeScript Generator
+              </h4>
+              <p className="text-[11px] text-[#777777] leading-relaxed">
+                Inspect, copy, or download clean TypeScript code for <code className="text-[#111111] font-mono">portfolioData.ts</code>.
+              </p>
+            </div>
+            <div className="mt-4 pt-3 border-t border-[#EAEAEA] text-[11px] font-extrabold uppercase tracking-wider text-[#E84511] flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+              <span>VIEW TS SOURCE</span>
+              <ArrowRight className="w-3 h-3" />
+            </div>
+          </button>
+        </div>
+
+        {/* Hidden File Input for Import */}
+        <input
+          ref={fileInputRef}
+          type="file"
+          accept=".json,application/json"
+          onChange={handleFileChange}
+          className="hidden"
+          aria-label="Upload JSON backup file"
+        />
+
+        {/* Import Feedback Toast / Alert */}
+        {importMessage && (
+          <div
+            className={`p-3.5 border flex items-center gap-2.5 text-xs font-bold animate-in fade-in duration-200 ${
+              importMessage.type === "success"
+                ? "bg-emerald-50 text-emerald-900 border-emerald-300"
+                : "bg-red-50 text-red-900 border-red-300"
+            }`}
+          >
+            {importMessage.type === "success" ? (
+              <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+            ) : (
+              <AlertTriangle className="w-4 h-4 text-red-600 shrink-0" />
+            )}
+            <span>{importMessage.text}</span>
+          </div>
+        )}
+      </div>
+
+      {/* 5. System Maintenance & Default Seed Reset */}
       <div className="bg-white border border-red-200 p-6 md:p-8">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="flex items-start gap-4">
@@ -222,7 +473,7 @@ export const OverviewTab: React.FC<OverviewTabProps> = ({
             </div>
             <div>
               <h3 className="text-sm font-extrabold uppercase tracking-wider text-[#111111]">
-                System Maintenance & Database Reset
+                System Maintenance &amp; Database Reset
               </h3>
               <p className="text-xs text-[#8E8E8E] mt-1 max-w-xl leading-relaxed">
                 Reset all portfolio data back to pristine factory seed defaults (<span className="font-mono text-red-500">cms-default.json</span>). This clears all draft modifications across all sections.
@@ -277,6 +528,13 @@ export const OverviewTab: React.FC<OverviewTabProps> = ({
           </div>
         )}
       </div>
+
+      {/* 6. TypeScript Source Modal */}
+      <TypeScriptExportModal
+        isOpen={showCodeModal}
+        onClose={() => setShowCodeModal(false)}
+        draftData={draftData}
+      />
     </div>
   );
 };

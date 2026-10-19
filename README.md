@@ -94,6 +94,54 @@ This automatically processes and exports transparent cutouts and web-optimized i
 
 ---
 
+## 🎛️ Full-Stack Admin CMS & Control Center (`/admin`)
+
+The portfolio includes a production-grade visual Content Management System (CMS) and studio control center located at `/admin`.
+
+### 1. Authentication & Access
+- **Admin Gateway:** Navigate to [`/admin`](http://localhost:3000/admin). Unauthenticated sessions are automatically intercepted by Next.js Edge Middleware and redirected to [`/admin/login`](http://localhost:3000/admin/login).
+- **Default Master Passphrase:** `gadex2026`
+- **Environment Configuration:**
+  - Create or edit `.env.local` to define your custom production password:
+    ```bash
+    ADMIN_PASSWORD="your-strong-secret-passphrase"
+    ```
+  - On **Vercel**, add `ADMIN_PASSWORD` under **Project Settings > Environment Variables**.
+- **Session Security:** Sessions are stored via a secure, `HttpOnly`, `SameSite=Lax` cookie (`gadex_admin_session`) cryptographically validated against `ADMIN_PASSWORD`.
+
+---
+
+### 2. The 9 Visual CMS Editor Tabs
+
+The Admin Control Center is divided into 9 dedicated tabs:
+
+| Tab | Name | Scope & Capabilities |
+| :--- | :--- | :--- |
+| **01** | **System Overview** | Live system health metrics, quick navigation shortcuts to public pages, **Download JSON Backup**, **Import/Restore JSON**, and **TypeScript Source Generator**. |
+| **02** | **Identity & Hero** | Personal details (name, role, email, phone, location, booking URL, social channels) and Hero Featured Project card. |
+| **03** | **Stats & Brand Marquee** | Live counter metrics (projects completed, happy clients, years experience, satisfaction rating) and client brand marquee logos with drag-less reordering. |
+| **04** | **Services Editor** | Complete CRUD and reordering for Services `001`–`006` with dynamic tag pills and image URLs. |
+| **05** | **Portfolio Projects** | Full CRUD for case studies with 5-position staggered layout configuration (`medium-left`, `small-right`, `full-wide`, `small-left`, `medium-right`) matching the Home page editorial grid. |
+| **06** | **Process & Bento Grid** | 4-step engineering workflow cards (`01`–`04`) with icon selectors (`sparkle`, `asterisk`, `bolt`, `plus`) and why-choose-me Bento grid cards. |
+| **07** | **Pricing & Reviews** | Dual-model pricing plans (`Project-Based` vs `Monthly Retainer`) feature lists and verified client testimonial reviews with star rating selectors. |
+| **08** | **About, Awards & Career** | Split-tone engineering philosophy headline, `/about` stats, industry awards/honors, and professional career timeline items. |
+| **09** | **Articles & FAQs** | Editorial articles archive (title, excerpt, category, author, date, image) and expandable accordion FAQ knowledgebase. |
+
+---
+
+### 3. Dual-Persistence & Live Broadcast Engine
+
+- **Dual-Persistence Model:**
+  - When you click **SAVE ALL CHANGES** (or press `Ctrl+S`), changes are persisted to `cms-db.json` (or dynamic runtime memory in serverless edge environments) and immediately formatted into `src/data/portfolioData.ts`.
+- **Instant Cross-Tab Live Synchronization:**
+  - Changes instantly broadcast via Web `BroadcastChannel` (`gadex_cms_channel`) and `CustomEvent` listeners. All open public tabs update in real-time without requiring a page reload.
+- **Data Portability & Backup Tools:**
+  - **Download JSON Backup:** Generates timestamped `.json` exports (`gadex-cms-backup-YYYY-MM-DD.json`) of the complete CMS state.
+  - **Import JSON Restore:** Restores historical backups with strict 13-key schema validation (`personalInfo`, `heroFeaturedProject`, `stats`, `clientLogos`, `services`, `projects`, `processSteps`, `testimonials`, `pricing`, `achievements`, `career`, `articles`, `faqs`).
+  - **TypeScript Source Generator:** Generates production-ready, strictly typed TypeScript code matching `src/data/portfolioData.ts` with one-click **Copy to Clipboard** and **Download .ts** options.
+
+---
+
 ## 💻 Local Development & Build Commands
 
 1. **Install dependencies:**
